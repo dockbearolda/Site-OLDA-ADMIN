@@ -188,7 +188,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.strapiId = u.strapiId;
         token.groupeId = u.groupeId;
         token.groupeSlug = u.groupeSlug;
-        token.isAdmin = u.isAdmin ?? false;
+
+        // Vérification admin : toujours basée sur ADMIN_EMAILS,
+        // quel que soit le provider (Strapi ou local).
+        const adminEmails = (process.env.ADMIN_EMAILS ?? "")
+          .split(",")
+          .map((e) => e.trim().toLowerCase())
+          .filter(Boolean);
+        const userEmail = (u.email ?? "").trim().toLowerCase();
+        token.isAdmin =
+          adminEmails.length > 0 &&
+          userEmail !== "" &&
+          adminEmails.includes(userEmail);
       }
       return token;
     },
