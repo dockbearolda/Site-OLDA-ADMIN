@@ -85,7 +85,6 @@ async function checkPassword(input: string, stored: string): Promise<boolean> {
 // ── NextAuth configuration ─────────────────────────────────────────
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
-  trustHost: true,
   providers: [
     Credentials({
       credentials: {
