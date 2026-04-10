@@ -119,9 +119,7 @@ export default function MesCommandesPage() {
                     {STATUT_LABEL[cmd.statut] ?? cmd.statut}
                   </span>
                   <span className={styles.cardCount}>{cmd.items.length} réf.</span>
-                  {cmd.total_achat_ht > 0 && (
-                    <span className={styles.cardTotal}>{fmtEur(cmd.total_achat_ht)}</span>
-                  )}
+                  {/* Total masqué temporairement */}
                   <svg
                     className={`${styles.chevron} ${isOpen ? styles.chevronOpen : ""}`}
                     width="16" height="16" viewBox="0 0 24 24" fill="none"
@@ -135,23 +133,7 @@ export default function MesCommandesPage() {
               {/* Détail */}
               {isOpen && (
                 <div className={styles.cardBody}>
-                  {/* Métriques financières */}
-                  {hasMarge && (
-                    <div className={styles.marginRow}>
-                      <div className={styles.marginMetric}>
-                        <span className={styles.marginValue}>{fmtEur(cmd.total_achat_ht)}</span>
-                        <span className={styles.marginLabel}>Investi B2B</span>
-                      </div>
-                      <div className={styles.marginMetric}>
-                        <span className={styles.marginValue}>{fmtEur(cmd.total_revente)}</span>
-                        <span className={styles.marginLabel}>CA Potentiel</span>
-                      </div>
-                      <div className={`${styles.marginMetric} ${styles.marginHero}`}>
-                        <span className={styles.marginHeroValue}>+{fmtEur(cmd.marge_projetee)}</span>
-                        <span className={styles.marginLabel}>Bénéfice projeté</span>
-                      </div>
-                    </div>
-                  )}
+                  {/* Métriques financières masquées temporairement */}
 
                   {/* Articles */}
                   <table className={styles.itemsTable}>

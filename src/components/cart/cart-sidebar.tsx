@@ -273,11 +273,7 @@ export function CartSidebarContent({ onValidate }: CartSidebarContentProps) {
                 <div className={styles.itemInfo}>
                   <span className={styles.itemRef}>{item.ref}</span>
                   <span className={styles.itemLabel}>{item.label}</span>
-                  {item.prixAchat != null && (
-                    <span className={styles.itemSubtotal}>
-                      {fmt(item.prixAchat * item.quantity)}
-                    </span>
-                  )}
+                  {/* Prix masqués temporairement */}
                 </div>
 
                 <div className={styles.itemControls}>
@@ -320,29 +316,9 @@ export function CartSidebarContent({ onValidate }: CartSidebarContentProps) {
 
       {/* ── Footer sticky ── */}
       <div className={styles.footer}>
-        {/* Jauge Franco de Port */}
-        <CartProgressBar currentAmount={totalB2B} targetAmount={1000} />
+        {/* Jauge Franco de Port masquée temporairement */}
 
-        {/* Tableau de marge compact */}
-        {hasPrices && (
-          <div className={styles.margins}>
-            <div className={styles.marginRow}>
-              <span className={styles.marginLabel}>Investissement B2B</span>
-              <span className={styles.marginValue}>{fmt(totalB2B)}</span>
-            </div>
-            <div className={styles.marginRow}>
-              <span className={styles.marginLabel}>CA Potentiel</span>
-              <span className={styles.marginValue}>{fmt(totalRevente)}</span>
-            </div>
-            <div className={styles.marginHero}>
-              <span className={styles.marginHeroLabel}>Bénéfice net projeté</span>
-              <div className={styles.marginHeroRight}>
-                <span className={styles.marginHeroValue}>+{fmt(margeNette)}</span>
-                <span className={styles.marginHeroBadge}>+{tauxMarge}%</span>
-              </div>
-            </div>
-          </div>
-        )}
+        {/* Tableau de marge masqué temporairement */}
 
         {/* CTA principal */}
         <Link

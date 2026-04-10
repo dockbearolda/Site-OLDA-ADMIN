@@ -239,16 +239,7 @@ export default function CommandePage() {
                         <div className={styles.cartItemInfo}>
                           <span className={styles.cartItemRef}>{item.ref}</span>
                           <span className={styles.cartItemLabel}>{item.label}</span>
-                          {item.prixAchat != null && (
-                            <span className={styles.cartItemPrice}>
-                              {(item.prixAchat * item.quantity).toLocaleString("fr-FR", { minimumFractionDigits: 2 })} €
-                              {item.prixRevente != null && (
-                                <span className={styles.cartItemMarge}>
-                                  {" "}· +{((item.prixRevente - item.prixAchat) * item.quantity).toLocaleString("fr-FR", { minimumFractionDigits: 2 })} € marge
-                                </span>
-                              )}
-                            </span>
-                          )}
+                          {/* Prix masqués temporairement */}
                         </div>
                       </div>
 
@@ -277,19 +268,7 @@ export default function CommandePage() {
               </div>
             </div>
 
-            {/* ── Col 2 : Tableau de rentabilité ── */}
-            <div className={styles.marginSection}>
-              <div className={styles.marginSectionHeader}>
-                <span className={styles.marginSectionLabel}>Rentabilité</span>
-              </div>
-              {hasPrices ? (
-                <MarginDashboard vertical />
-              ) : (
-                <div className={styles.marginSectionEmpty}>
-                  <p>Ajoutez des articles avec prix de revente pour voir l&apos;analyse de marge.</p>
-                </div>
-              )}
-            </div>
+            {/* ── Col 2 : Tableau de rentabilité masqué temporairement ── */}
 
             {/* ── Col 3 : Formulaire de contact ── */}
             <form className={styles.formSection} onSubmit={handleSubmit} noValidate>
