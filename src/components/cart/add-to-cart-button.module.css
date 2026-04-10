@@ -1,0 +1,185 @@
+/* ── Bloc avant ajout ── */
+.addBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* ── Stepper quantité (avant ajout) ── */
+.pendingRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  border: 1px solid rgba(15, 17, 19, 0.14);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ── Bouton Ajouter ── */
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 16px;
+  border: none;
+  border-radius: 12px;
+  background: var(--color-dark);
+  color: #fff;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition:
+    background var(--transition-fast),
+    transform var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.button:hover:not(:disabled) {
+  background: #2a2d31;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-btn);
+}
+
+.button:active:not(:disabled) {
+  transform: scale(0.97) translateY(0);
+  box-shadow: none;
+}
+
+.button:disabled {
+  cursor: default;
+}
+
+/* ── État "Chargement" (noir + spinner, 300ms) ── */
+.buttonLoading {
+  background: var(--color-dark);
+  cursor: wait;
+}
+
+/* ── Spinner ── */
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.28);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin 0.55s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── État "Ajouté" (vert émeraude mat, 1.5s) ── */
+.buttonAdded {
+  background: #059669;
+  animation: popIn 0.25s ease;
+}
+
+.checkIcon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  animation: drawCheck 0.3s ease 0.05s both;
+  stroke-dasharray: 20;
+  stroke-dashoffset: 20;
+}
+
+/* ── Bloc "dans le panier" : stepper + raccourcis ── */
+.cartBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  width: 100%;
+}
+
+/* ── Raccourcis quantité (+5, +10, +25) ── */
+.quickAdd {
+  display: flex;
+  gap: 5px;
+}
+
+.quickAddBtn {
+  flex: 1;
+  padding: 5px 0;
+  border: 1px solid rgba(15, 17, 19, 0.12);
+  border-radius: 8px;
+  background: transparent;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--color-muted);
+  cursor: pointer;
+  letter-spacing: 0.01em;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.quickAddBtn:hover {
+  background: var(--color-dark);
+  color: #fff;
+  border-color: transparent;
+}
+
+.quickAddBtn:active {
+  transform: scale(0.96);
+}
+
+/* ── Contrôles quantité (dans le panier) ── */
+.quantityRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  border: 1px solid rgba(15, 17, 19, 0.14);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+/* ── Bouton +/− partagé ── */
+.qtyBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  height: 40px;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-text);
+  transition: background 120ms ease;
+}
+
+.qtyBtn:hover {
+  background: rgba(15, 17, 19, 0.06);
+}
+
+.qtyBtn:active {
+  background: rgba(15, 17, 19, 0.1);
+}
+
+.qtyValue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  font-size: 0.94rem;
+  font-weight: 800;
+}
+
+/* ── Animations ── */
+@keyframes popIn {
+  0%   { transform: scale(0.96); }
+  60%  { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes drawCheck {
+  to { stroke-dashoffset: 0; }
+}

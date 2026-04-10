@@ -1,0 +1,136 @@
+.dashboard {
+  display: grid;
+  gap: 12px;
+  padding: 20px 24px;
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 20px;
+  background: linear-gradient(
+    135deg,
+    rgba(16, 185, 129, 0.04) 0%,
+    rgba(16, 185, 129, 0.01) 100%
+  );
+}
+
+.label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #10b981;
+}
+
+.metrics {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metric {
+  flex: 1;
+  display: grid;
+  gap: 3px;
+}
+
+.metricValue {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.metricName {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+.metricSub {
+  font-size: 0.7rem;
+  color: var(--color-muted);
+  opacity: 0.7;
+}
+
+/* Flèche entre métriques */
+.arrow {
+  flex-shrink: 0;
+  color: rgba(16, 185, 129, 0.4);
+}
+
+/* Variante verticale (colonne dédiée) */
+.metricsVertical {
+  flex-direction: column;
+  gap: 6px;
+}
+
+.metricsVertical .arrow {
+  transform: rotate(90deg);
+  align-self: center;
+}
+
+.metricsVertical .metricHero {
+  padding: 16px 18px;
+}
+
+.metricsVertical .heroValue {
+  font-size: 1.8rem;
+}
+
+/* Carte héro : Bénéfice net */
+.metricHero {
+  padding: 14px 18px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+  gap: 4px;
+}
+
+.heroValue {
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #6ee7b7;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.heroName {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: rgba(110, 231, 183, 0.8);
+}
+
+.heroBadge {
+  display: inline-flex;
+  width: fit-content;
+  margin-top: 4px;
+  padding: 3px 8px;
+  border-radius: 100px;
+  background: rgba(110, 231, 183, 0.15);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #6ee7b7;
+  letter-spacing: 0.02em;
+  font-variant-numeric: tabular-nums;
+}
+
+@media (max-width: 680px) {
+  .metrics {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
+  }
+
+  .arrow {
+    transform: rotate(90deg);
+    align-self: center;
+  }
+
+  .metricHero {
+    padding: 16px 18px;
+  }
+
+  .heroValue {
+    font-size: 1.8rem;
+  }
+}

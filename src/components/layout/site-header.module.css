@@ -1,0 +1,40 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  padding: 20px 28px;
+  pointer-events: none;
+}
+
+.logoLink {
+  pointer-events: all;
+  display: flex;
+  align-items: center;
+  opacity: 0.88;
+  transition: opacity 0.2s ease;
+}
+
+.logoLink:hover {
+  opacity: 1;
+}
+
+.logo {
+  width: 44px;
+  height: 44px;
+  color: var(--color-dark);
+}
+
+@media (max-width: 680px) {
+  .header {
+    padding: 14px 20px;
+    justify-content: flex-start;
+  }
+
+  .logo {
+    width: 36px;
+    height: 36px;
+  }
+}

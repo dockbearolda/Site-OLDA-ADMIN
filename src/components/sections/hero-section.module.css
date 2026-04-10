@@ -1,0 +1,301 @@
+/* ── Atelier Trust Badge ── */
+.atelierBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  width: fit-content;
+  padding: 6px 14px 6px 10px;
+  border: 1px solid rgba(60, 45, 30, 0.14);
+  border-radius: 999px;
+  background: rgba(62, 46, 28, 0.04);
+  color: #3e2e1c;
+}
+
+.atelierIcon {
+  flex-shrink: 0;
+  color: #7a5c38;
+}
+
+.atelierText {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #5a4228;
+  white-space: nowrap;
+}
+
+.atelierSep {
+  display: inline-block;
+  width: 1px;
+  height: 10px;
+  background: rgba(60, 45, 30, 0.2);
+  flex-shrink: 0;
+}
+
+.atelierSub {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #8a6d4a;
+  white-space: nowrap;
+}
+
+/* ─────────────────────────────────────────── */
+
+.section {
+  padding-top: clamp(16px, 2vw, 24px);
+}
+
+.shell {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+  gap: clamp(28px, 4vw, 48px);
+  align-items: start;
+}
+
+.copy,
+.preview {
+  animation: none;
+}
+
+.copy {
+  display: grid;
+  gap: 24px;
+  padding: clamp(24px, 4vw, 32px) 0 0;
+}
+
+.eyebrow {
+  display: inline-flex;
+  width: fit-content;
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.title {
+  max-width: 10ch;
+  font-size: clamp(3rem, 7vw, 6.2rem);
+  line-height: 0.96;
+  letter-spacing: -0.08em;
+}
+
+.description {
+  max-width: 40ch;
+  color: var(--color-muted);
+  font-size: clamp(1.02rem, 2vw, 1.12rem);
+  line-height: 1.6;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.primaryAction,
+.secondaryAction {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-weight: 700;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease,
+    border-color 180ms ease;
+}
+
+.primaryAction {
+  background: var(--color-dark);
+  color: #f4f6f1;
+}
+
+.secondaryAction {
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text);
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.metricCard {
+  min-height: 116px;
+  display: grid;
+  align-content: start;
+  gap: 6px;
+  padding: 18px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  background: var(--color-surface-strong);
+}
+
+.metricValue {
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+
+.metricLabel {
+  color: var(--color-muted);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.preview {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  padding: clamp(22px, 3vw, 28px);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 36px;
+  background: var(--color-surface-strong);
+  overflow: hidden;
+}
+
+.previewHeader {
+  position: relative;
+  display: grid;
+  gap: 8px;
+}
+
+.previewLabel {
+  color: var(--color-muted);
+  font-size: 0.82rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.previewTitle {
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  line-height: 1.08;
+  letter-spacing: -0.05em;
+}
+
+.mediaGrid {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(180px, 0.65fr);
+  gap: 14px;
+}
+
+.primaryMedia {
+  min-height: 100%;
+}
+
+.secondaryMediaGrid {
+  display: grid;
+  gap: 14px;
+}
+
+.familyStack {
+  position: relative;
+  display: grid;
+  gap: 14px;
+}
+
+.familyCard {
+  display: grid;
+  gap: 10px;
+  padding: 16px 18px;
+  border: 1px solid rgba(15, 17, 19, 0.08);
+  border-radius: 24px;
+  background: var(--color-surface-strong);
+}
+
+.familyTop {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.familyName {
+  font-size: 1.06rem;
+  font-weight: 800;
+}
+
+.familyCount {
+  color: var(--color-muted);
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.pillRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  color: var(--color-muted);
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+.signalRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.signal {
+  color: var(--color-text);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+@media (max-width: 1120px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    max-width: 11ch;
+  }
+
+  .metrics {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .copy {
+    gap: 24px;
+  }
+
+  .title {
+    max-width: none;
+    font-size: clamp(2.6rem, 16vw, 4.1rem);
+  }
+
+  .metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .mediaGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .secondaryMediaGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .actions {
+    flex-direction: column;
+  }
+
+  .primaryAction,
+  .secondaryAction {
+    width: 100%;
+  }
+}

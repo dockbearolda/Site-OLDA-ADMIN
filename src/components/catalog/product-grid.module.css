@@ -1,0 +1,525 @@
+/* ── Omni-Search ─────────────────────────────────────────────── */
+
+.searchBar {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.searchIcon {
+  position: absolute;
+  left: 14px;
+  color: var(--color-muted);
+  pointer-events: none;
+  flex-shrink: 0;
+}
+
+.searchInput {
+  width: 100%;
+  padding: 11px 40px 11px 40px;
+  border: 1px solid rgba(15, 17, 19, 0.10);
+  border-radius: 12px;
+  background: var(--color-surface-strong);
+  font-size: 0.9rem;
+  color: var(--color-text);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+  -webkit-appearance: none;
+}
+
+.searchInput::placeholder {
+  color: rgba(15, 17, 19, 0.32);
+}
+
+.searchInput:focus {
+  border-color: #1d1d1f;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* masquer le × natif du type="search" sur webkit */
+.searchInput::-webkit-search-cancel-button {
+  display: none;
+}
+
+.searchClear {
+  position: absolute;
+  right: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  background: rgba(15, 17, 19, 0.08);
+  border-radius: 50%;
+  color: var(--color-muted);
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: background var(--transition-fast);
+}
+
+.searchClear:hover {
+  background: rgba(15, 17, 19, 0.14);
+}
+
+/* ── Filter bar ─────────────────────────────────────────────── */
+
+.filterBar {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 6px 10px;
+  border: 1px solid rgba(15, 17, 19, 0.07);
+  border-radius: 12px;
+  background: var(--color-surface-strong);
+}
+
+/* Color swatches */
+.swatches {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.swatch {
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  background: var(--swatch-color);
+  cursor: pointer;
+  opacity: 0.4;
+  transition: opacity 150ms ease, transform 150ms ease;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.swatch:hover {
+  opacity: 1;
+  transform: scale(1.18);
+}
+
+.swatchActive {
+  opacity: 1;
+  box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--color-text);
+}
+
+/* Text pills */
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.pill {
+  padding: 5px 12px;
+  border: 1px solid rgba(15, 17, 19, 0.1);
+  border-radius: 100px;
+  background: var(--color-bg);
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.pill:hover {
+  background: var(--color-dark);
+  color: #fff;
+  border-color: transparent;
+}
+
+.pillActive {
+  background: var(--color-dark);
+  color: #fff;
+  border-color: transparent;
+}
+
+.clearBtn {
+  margin-left: auto;
+  padding: 5px 10px;
+  border: none;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 120ms ease;
+}
+
+.clearBtn:hover {
+  color: #c0392b;
+}
+
+.filterCount {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.clearAllLink {
+  border: none;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  padding: 0;
+}
+
+.clearAllLink:hover {
+  color: #c0392b;
+}
+
+/* ── Stock indicators ──────────────────────────────────────── */
+
+.stockWrap {
+  min-height: 18px;
+}
+
+.stockGreen {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.18);
+  vertical-align: middle;
+}
+
+.stockMid {
+  font-size: 0.72rem;
+  font-weight: 500;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.stockLow {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #c2410c;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Vue Liste ──────────────────────────────────────────────── */
+
+.listView {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(15, 17, 19, 0.08);
+  border-radius: 16px;
+  background: var(--color-surface-strong);
+  overflow: hidden;
+}
+
+.listHeader {
+  display: grid;
+  grid-template-columns: 48px 90px 1fr 130px auto;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 16px;
+  background: rgba(15, 17, 19, 0.025);
+  border-bottom: 1px solid rgba(15, 17, 19, 0.07);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+.listRow {
+  display: grid;
+  grid-template-columns: 48px 90px 1fr 130px auto;
+  align-items: center;
+  gap: 16px;
+  padding: 10px 16px;
+  border-bottom: 1px solid rgba(15, 17, 19, 0.06);
+  transition: background var(--transition-fast);
+}
+
+.listRow:last-child {
+  border-bottom: none;
+}
+
+.listRow:hover {
+  background: rgba(15, 17, 19, 0.02);
+}
+
+.listThumb {
+  position: relative;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--color-bg);
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.listThumbImg {
+  object-fit: cover;
+}
+
+.listThumbPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: var(--color-bg);
+}
+
+.listRef {
+  font-family: ui-monospace, "SFMono-Regular", monospace;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.listLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.listStock {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+}
+
+.listActions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* ── Grid ───────────────────────────────────────────────────── */
+
+.itemGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+/* ── Card ───────────────────────────────────────────────────── */
+
+.itemCard {
+  display: grid;
+  align-content: start;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid #EAEAEA;
+  border-radius: 20px;
+  background: #FFFFFF;
+  transition:
+    transform var(--transition-base),
+    border-color var(--transition-base),
+    box-shadow var(--transition-base);
+  will-change: transform;
+}
+
+.itemCard:hover {
+  transform: translateY(-3px);
+  border-color: #D4D4D4;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+}
+
+/* ── Image area ─────────────────────────────────────────────── */
+
+.imageWrap {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #FFFFFF;
+}
+
+.image {
+  object-fit: cover;
+  transition: transform 700ms ease-in-out;
+}
+
+.itemCard:hover .image {
+  transform: scale(1.05);
+}
+
+/* ── Quick view button ──────────────────────────────────────── */
+
+.quickViewBtn {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.82);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: var(--color-text);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 200ms ease, transform 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.14);
+}
+
+.imageWrap:hover .quickViewBtn {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+/* ── Card color swatches ────────────────────────────────────── */
+
+.cardSwatches {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 0 2px;
+}
+
+.cardSwatch {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--cs-color);
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+}
+
+.cardSwatchMore {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--color-muted);
+  letter-spacing: 0.02em;
+}
+
+/* ── Card content ───────────────────────────────────────────── */
+
+.itemContent {
+  display: grid;
+  gap: 10px;
+}
+
+.itemMeta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.itemRef {
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* 350ml institutional tag */
+.volumeTag {
+  font-family: ui-monospace, "SFMono-Regular", "Menlo", monospace;
+  font-size: 0.62rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+  padding: 2px 6px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.02);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.itemName {
+  font-size: 1.12rem;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+}
+
+.metaTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.metaTag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 100px;
+  color: var(--color-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+
+@media (max-width: 1080px) {
+  .itemGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .listHeader,
+  .listRow {
+    grid-template-columns: 48px 80px 1fr auto;
+  }
+
+  .listStock {
+    display: none;
+  }
+
+  .listHeader > :nth-child(4) {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .itemGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .filterBar {
+    gap: 10px;
+  }
+
+  .listHeader,
+  .listRow {
+    grid-template-columns: 48px 1fr auto;
+  }
+
+  .listRef {
+    display: none;
+  }
+
+  .listHeader > :nth-child(2) {
+    display: none;
+  }
+}

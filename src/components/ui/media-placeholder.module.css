@@ -1,0 +1,32 @@
+.placeholder {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid rgba(15, 17, 19, 0.08);
+  border-radius: 24px;
+  background: #e2e4df;
+}
+
+.square {
+  aspect-ratio: 1 / 1;
+}
+
+.landscape {
+  aspect-ratio: 4 / 3;
+}
+
+.portrait {
+  aspect-ratio: 4 / 5;
+}
+
+.label {
+  position: absolute;
+  left: 14px;
+  bottom: 14px;
+  z-index: 1;
+  padding: 0;
+  color: rgba(15, 17, 19, 0.56);
+  font-size: 0.76rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}

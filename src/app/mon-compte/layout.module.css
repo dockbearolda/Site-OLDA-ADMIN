@@ -1,0 +1,79 @@
+.root {
+  min-height: 100vh;
+  background: var(--color-bg);
+}
+
+.nav {
+  border-bottom: 1px solid rgba(15, 17, 19, 0.08);
+  background: var(--color-bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+
+.brand {
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.05em;
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navLink {
+  padding: 7px 14px;
+  border-radius: 10px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  text-decoration: none;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.navLink:hover {
+  background: rgba(15, 17, 19, 0.05);
+  color: var(--color-text);
+}
+
+.signoutBtn {
+  padding: 7px 14px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.signoutBtn:hover {
+  background: rgba(192, 57, 43, 0.06);
+  color: #c0392b;
+}
+
+.main {
+  padding: 40px 0 80px;
+}
+
+.welcome {
+  margin-bottom: 32px;
+}
+
+.welcomeText {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}

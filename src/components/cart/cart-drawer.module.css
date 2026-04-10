@@ -1,0 +1,91 @@
+/* ── Backdrop ── */
+
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 490;
+  background: rgba(0, 0, 0, 0);
+  pointer-events: none;
+  transition: background 240ms ease;
+}
+
+.backdropVisible {
+  background: rgba(0, 0, 0, 0.35);
+  pointer-events: auto;
+}
+
+/* ── Panel off-canvas ── */
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 500;
+  width: min(380px, 92vw);
+  height: 100dvh;
+  background: #f7f7f8;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 300ms cubic-bezier(0.32, 0.72, 0, 1);
+  box-shadow: -8px 0 40px rgba(0, 0, 0, 0.12);
+}
+
+.panelOpen {
+  transform: translateX(0);
+}
+
+/* En-tête du drawer */
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--color-border-strong);
+  flex-shrink: 0;
+}
+
+.panelTitle {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+.closeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.closeBtn:hover {
+  background: rgba(15, 17, 19, 0.06);
+  color: var(--color-text);
+}
+
+/* Corps du drawer — contient CartSidebarContent */
+
+.panelBody {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* Sur desktop, le drawer ne s'affiche jamais (géré par CartButton CSS) */
+@media (min-width: 1280px) {
+  .backdrop,
+  .panel {
+    display: none !important;
+  }
+}

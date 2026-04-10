@@ -1,0 +1,189 @@
+.sidebar {
+  height: 100%;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 20px 16px 28px;
+  height: 100%;
+  background: var(--color-surface-strong);
+  overflow-y: auto;
+}
+
+/* Logo */
+
+.logoLink {
+  display: flex;
+  justify-content: center;
+  padding: 4px 4px 8px;
+  border-bottom: 1px solid var(--color-border-strong);
+  transition: opacity 0.2s ease;
+}
+
+.logoLink:hover {
+  opacity: 0.6;
+}
+
+.logoMark {
+  width: 36px;
+  height: 36px;
+  color: var(--color-text);
+}
+
+/* Nav */
+
+.nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.navGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.familyLink,
+.familyLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #1d1d1f;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.familyLink {
+  padding: 4px 8px 4px 6px;
+  border-radius: 8px;
+  margin-left: -6px;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.familyLink:hover {
+  background: rgba(15, 17, 19, 0.05);
+}
+
+.familyLabel {
+  cursor: default;
+  margin-bottom: 2px;
+}
+
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  opacity: 0.4;
+  transition: opacity var(--transition-fast);
+}
+
+.icon svg {
+  width: 100%;
+  height: 100%;
+  color: #1d1d1f;
+}
+
+.familyLink:hover .icon,
+.familyLabel:hover .icon {
+  opacity: 0.75;
+}
+
+.activeFamily {
+  color: #1d1d1f;
+  font-weight: 700;
+  /* Pas de background sur le label parent — seul l'enfant actif reçoit l'indicateur */
+}
+
+/* Le lien standalone (Nouveauté) reçoit un fond subtil quand actif */
+.familyLink.activeFamily {
+  background: rgba(15, 17, 19, 0.07);
+}
+
+.familyLink.activeFamily:hover {
+  background: rgba(15, 17, 19, 0.07);
+}
+
+.activeFamily .icon {
+  opacity: 1;
+}
+
+/* Sub-links */
+
+.subLinks {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  padding-left: 18px;
+  border-left: 1px solid rgba(0, 0, 0, 0.08);
+  margin-left: 7px;
+}
+
+.subLink {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 6px;
+  /* Pas de margin-left négatif : le fond de survol ne mordra jamais sur la ligne verticale */
+  color: #8e8e93;
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.4;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.subLink:hover {
+  color: #1d1d1f;
+  background: rgba(15, 17, 19, 0.05);
+}
+
+/* Monochrome — plus de bleu accent */
+.activeSubLink {
+  color: #1d1d1f;
+  font-weight: 500;
+  background: rgba(15, 17, 19, 0.07);
+}
+
+.activeSubLink:hover {
+  color: #1d1d1f;
+  background: rgba(15, 17, 19, 0.09);
+}
+
+@media (max-width: 980px) {
+  .sidebar {
+    height: auto;
+  }
+
+  .panel {
+    padding: 16px;
+    border-bottom: 1px solid var(--color-border-strong);
+    overflow-y: visible;
+  }
+
+  .nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .navGroup {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
+  }
+
+  .subLinks {
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-left: none;
+    padding-left: 0;
+    margin-left: 0;
+    gap: 4px 8px;
+  }
+}

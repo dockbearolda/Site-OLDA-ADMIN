@@ -1,0 +1,55 @@
+.root {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  overflow: hidden;
+  /* Mesh gradient base */
+  background:
+    radial-gradient(ellipse at 20% 20%, #EDF0F5 0%, transparent 55%),
+    radial-gradient(ellipse at 80% 80%, #EAEDf2 0%, transparent 55%),
+    radial-gradient(ellipse at 60% 10%, #F5F6F8 0%, transparent 45%),
+    linear-gradient(160deg, #F8F9FB 0%, #EEF0F4 100%);
+}
+
+/* Breathing overlay */
+.pulse {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 35% 38%, rgba(255, 255, 255, 0.72) 0%, transparent 58%),
+    radial-gradient(ellipse at 72% 68%, rgba(220, 228, 242, 0.32) 0%, transparent 48%);
+  animation: breathe 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 0.55; }
+  50%       { opacity: 1; }
+}
+
+/* OLDA watermark */
+.logo {
+  position: relative;
+  z-index: 1;
+  width: 48px;
+  height: 48px;
+  color: #1d1d1f;
+  opacity: 0.09;
+  flex-shrink: 0;
+}
+
+/* Editorial label */
+.label {
+  position: relative;
+  z-index: 1;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: #B2B8C2;
+  white-space: nowrap;
+}

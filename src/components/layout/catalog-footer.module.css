@@ -1,0 +1,157 @@
+/* ── CatalogFooter — Rassurance Institutionnelle B2B ── */
+
+.footer {
+  padding: 40px 32px 32px;
+  border-top: 1px solid var(--color-border-strong);
+  background: #f5f5f7;
+}
+
+/* ── Grille 3 colonnes ── */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px;
+  max-width: 880px;
+}
+
+/* ── Colonne générique ── */
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Logo + nom de marque ── */
+.logoBlock {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--color-text);
+}
+
+.logo {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  color: var(--color-dark);
+}
+
+.brandName {
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+/* ── Adresse ── */
+.address {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  font-style: normal;
+  font-size: 0.78rem;
+  line-height: 1.6;
+  color: var(--color-muted);
+}
+
+/* ── En-tête de colonne (icône + titre) ── */
+.colHeader {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: var(--color-muted);
+}
+
+.colTitle {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--color-text);
+}
+
+/* ── Données tabulaires (IBAN, SIRET…) ── */
+.dataList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.dataRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.dataLabel {
+  flex-shrink: 0;
+  width: 52px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  opacity: 0.45;
+}
+
+.dataValue {
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── Email cliquable ── */
+.emailLink {
+  color: var(--color-muted);
+  transition: color var(--transition-fast);
+}
+
+.emailLink:hover {
+  color: var(--color-accent);
+}
+
+/* ── Copyright ── */
+.copyright {
+  margin-top: 32px;
+  padding-top: 20px;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  opacity: 0.7;
+  letter-spacing: 0.01em;
+}
+
+/* ── Tablette : 2 colonnes ── */
+@media (max-width: 860px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .col:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ── Mobile : 1 colonne ── */
+@media (max-width: 520px) {
+  .footer {
+    padding: 32px 20px 24px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .col:first-child {
+    grid-column: auto;
+  }
+}

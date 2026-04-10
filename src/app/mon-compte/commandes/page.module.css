@@ -1,0 +1,292 @@
+.page {
+  display: grid;
+  gap: 8px;
+}
+
+.title {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  letter-spacing: -0.05em;
+  margin: 0 0 4px;
+}
+
+.count {
+  margin: 0 0 24px;
+  font-size: 0.86rem;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+/* ── État vide / chargement ── */
+
+.state {
+  padding: 60px 0;
+  text-align: center;
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+
+.spinner {
+  display: block;
+  width: 28px;
+  height: 28px;
+  border: 3px solid rgba(15, 17, 19, 0.1);
+  border-top-color: var(--color-dark);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.errorText {
+  margin: 0;
+  font-weight: 600;
+  color: #c0392b;
+}
+
+.errorSub {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--color-muted);
+}
+
+.emptyText {
+  margin: 0;
+  color: var(--color-muted);
+  font-size: 1.05rem;
+}
+
+.ctaLink {
+  display: inline-flex;
+  padding: 12px 24px;
+  border: 1px solid rgba(15, 17, 19, 0.14);
+  border-radius: 14px;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-text);
+  text-decoration: none;
+  transition: background var(--transition-fast);
+}
+
+.ctaLink:hover {
+  background: rgba(15, 17, 19, 0.04);
+}
+
+/* ── Liste des commandes ── */
+
+.list {
+  display: grid;
+  gap: 10px;
+}
+
+.card {
+  border: 1px solid rgba(15, 17, 19, 0.09);
+  border-radius: 18px;
+  background: var(--color-surface-strong);
+  overflow: hidden;
+  transition: border-color var(--transition-fast);
+}
+
+.card:hover {
+  border-color: rgba(15, 17, 19, 0.16);
+}
+
+/* En-tête cliquable */
+.cardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 18px 20px;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+}
+
+.cardLeft {
+  display: grid;
+  gap: 3px;
+}
+
+.cardRef {
+  font-size: 0.9rem;
+  font-weight: 700;
+  font-family: monospace;
+  letter-spacing: 0.04em;
+  color: var(--color-text);
+}
+
+.cardDate {
+  font-size: 0.78rem;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.cardRight {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.statut {
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+}
+
+.statutPending  { background: rgba(245, 166, 35, 0.12); color: #b07800; }
+.statutConfirmed { background: rgba(16, 185, 129, 0.12); color: #059669; }
+.statutShipped  { background: rgba(0, 113, 227, 0.12); color: #0056b3; }
+.statutCancelled { background: rgba(192, 57, 43, 0.08); color: #c0392b; }
+
+.cardCount {
+  font-size: 0.82rem;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.cardTotal {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.chevron {
+  color: var(--color-muted);
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.chevronOpen {
+  transform: rotate(180deg);
+}
+
+/* Corps expandé */
+.cardBody {
+  padding: 0 20px 20px;
+  display: grid;
+  gap: 16px;
+  border-top: 1px solid rgba(15, 17, 19, 0.07);
+}
+
+/* Métriques de marge */
+.marginRow {
+  display: flex;
+  gap: 8px;
+  padding-top: 16px;
+}
+
+.marginMetric {
+  flex: 1;
+  display: grid;
+  gap: 3px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--color-bg);
+}
+
+.marginValue {
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.marginLabel {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  font-weight: 600;
+}
+
+.marginHero {
+  background: linear-gradient(135deg, #064e3b, #065f46);
+}
+
+.marginHeroValue {
+  font-size: 1.1rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: #6ee7b7;
+}
+
+.marginHero .marginLabel {
+  color: rgba(110, 231, 183, 0.7);
+}
+
+/* Tableau articles */
+.itemsTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+}
+
+.itemsTable thead tr {
+  border-bottom: 1px solid rgba(15, 17, 19, 0.08);
+}
+
+.itemsTable th {
+  padding: 6px 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-muted);
+  text-align: left;
+}
+
+.itemsTable td {
+  padding: 10px 8px;
+  border-bottom: 1px solid rgba(15, 17, 19, 0.05);
+  color: var(--color-text);
+}
+
+.itemsTable tr:last-child td {
+  border-bottom: none;
+}
+
+.tdRef {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-muted);
+  white-space: nowrap;
+  font-family: monospace;
+}
+
+.tdQty {
+  font-weight: 700;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Bouton re-commander */
+.reorderBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 20px;
+  border: none;
+  border-radius: 14px;
+  background: var(--color-dark);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.reorderBtn:hover {
+  background: #2a2d31;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-btn);
+}
+
+.reorderBtn:active {
+  transform: scale(0.98) translateY(0);
+}

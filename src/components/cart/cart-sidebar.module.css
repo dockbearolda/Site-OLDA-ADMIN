@@ -1,0 +1,713 @@
+/* ── Conteneur principal ── */
+
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #f7f7f8;
+  border-left: 1px solid var(--color-border-strong);
+}
+
+.header {
+  flex-shrink: 0;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid var(--color-border-strong);
+}
+
+.headerLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+}
+
+/* Le body = scrollArea + footer dans un flex colonne */
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* ── État vide ── */
+
+.empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 40px 28px;
+  text-align: center;
+}
+
+.emptyIcon {
+  width: 56px;
+  height: 56px;
+  color: rgba(15, 17, 19, 0.12);
+}
+
+.emptyIcon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.emptyTitle {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: rgba(15, 17, 19, 0.35);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.emptyHint {
+  font-size: 0.78rem;
+  color: rgba(15, 17, 19, 0.25);
+  margin: 0;
+}
+
+/* ── Zone scrollable ── */
+
+.scrollArea {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 16px;
+}
+
+.count {
+  margin: 0 0 12px;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-muted);
+}
+
+/* ── Liste d'articles ── */
+
+.itemList {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: var(--color-surface-strong);
+  border: 1px solid rgba(15, 17, 19, 0.07);
+}
+
+.itemThumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 9px;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+
+.thumbImg {
+  object-fit: cover;
+}
+
+.thumbPlaceholder {
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 17, 19, 0.05);
+}
+
+.itemInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.itemRef {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.itemLabel {
+  font-size: 0.83rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--color-text);
+}
+
+.itemSubtotal {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--color-muted);
+}
+
+/* Contrôle quantité */
+
+.itemControls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.qtyGroup {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(15, 17, 19, 0.12);
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.qtyBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--color-text);
+  transition: background var(--transition-fast);
+}
+
+.qtyBtn:hover {
+  background: rgba(15, 17, 19, 0.06);
+}
+
+.qtyValue {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.removeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: rgba(15, 17, 19, 0.22);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.removeBtn:hover {
+  background: rgba(192, 57, 43, 0.07);
+  color: #c0392b;
+}
+
+/* ── Offre Privilège (upsell conditionnel) ── */
+
+.privilegeBlock {
+  flex-shrink: 0;
+  margin: 0 12px 10px;
+  padding: 11px 13px 13px;
+  border-radius: 12px;
+  background: #fdfbf5;
+  border: 1px solid rgba(180, 155, 90, 0.22);
+}
+
+.privilegeHeader {
+  margin-bottom: 10px;
+}
+
+.privilegeTitle {
+  margin: 0 0 4px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: #1a1a1a;
+}
+
+.privilegeSubtitle {
+  margin: 0;
+  font-size: 0.72rem;
+  font-style: italic;
+  color: #888;
+  line-height: 1.45;
+}
+
+.discountBadge {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 6px;
+  padding: 1px 6px;
+  border-radius: 5px;
+  background: #1a1a1a;
+  color: #fff;
+  font-size: 0.63rem;
+  font-weight: 700;
+  font-style: normal;
+  letter-spacing: 0.03em;
+  vertical-align: middle;
+}
+
+/* keep legacy class for .quickBuy spacing used elsewhere if any */
+.quickBuy {
+  flex-shrink: 0;
+  padding: 10px 16px 12px;
+  border-top: 1px solid var(--color-border-strong);
+}
+
+.quickBuyTitle {
+  margin: 0 0 8px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--color-muted);
+}
+
+.quickBuyList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.quickBuyItem {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 7px 10px;
+  border-radius: 11px;
+  background: var(--color-surface-strong);
+  border: 1px solid rgba(15, 17, 19, 0.06);
+}
+
+.quickBuyThumb {
+  position: relative;
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 7px;
+  overflow: hidden;
+  background: rgba(15, 17, 19, 0.04);
+}
+
+.quickBuyLabel {
+  flex: 1;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.quickBuyBtn {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid rgba(15, 17, 19, 0.15);
+  border-radius: 8px;
+  background: transparent;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.quickBuyBtn:hover:not(:disabled) {
+  background: var(--color-dark);
+  color: #fff;
+  border-color: transparent;
+}
+
+.quickBuyBtn:active:not(:disabled) {
+  transform: scale(0.93);
+}
+
+.quickBuyBtnIn {
+  background: rgba(5, 150, 105, 0.1);
+  border-color: rgba(5, 150, 105, 0.25);
+  color: #059669;
+  cursor: default;
+  font-size: 0.82rem;
+}
+
+/* ── Footer sticky ── */
+
+.footer {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px 16px;
+  border-top: 1px solid var(--color-border-strong);
+  background: #f7f7f8;
+}
+
+/* Métriques de marge */
+
+.margins {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--color-border-strong);
+  margin-bottom: 2px;
+}
+
+.marginRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.marginLabel {
+  font-size: 0.76rem;
+  color: var(--color-muted);
+  font-weight: 500;
+}
+
+.marginValue {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* Carte héro marge */
+
+.marginHero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #064e3b, #065f46);
+  margin-top: 2px;
+}
+
+.marginHeroLabel {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(110, 231, 183, 0.75);
+}
+
+.marginHeroRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+}
+
+.marginHeroValue {
+  font-size: 0.96rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: #6ee7b7;
+  line-height: 1;
+}
+
+.marginHeroBadge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: rgba(110, 231, 183, 0.65);
+}
+
+/* Bouton valider */
+
+.validateBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 13px 16px;
+  border-radius: 14px;
+  background: var(--color-dark);
+  color: #fff;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+  text-align: center;
+}
+
+.validateBtn:hover {
+  background: #2a2d31;
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-btn);
+}
+
+.validateBtn:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
+
+/* Bouton PDF */
+
+.pdfBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 10px 16px;
+  border: 1px solid rgba(15, 17, 19, 0.13);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.pdfBtn:hover {
+  background: var(--color-dark);
+  color: #fff;
+  border-color: transparent;
+}
+
+/* ── Bouton CSV (ghost outline) ── */
+
+.csvBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 9px 16px;
+  border: 1px solid rgba(15, 17, 19, 0.12);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--color-muted);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.csvBtn:hover {
+  background: rgba(0, 113, 227, 0.06);
+  color: #0071e3;
+  border-color: rgba(0, 113, 227, 0.3);
+}
+
+/* ── Séparateur discret ── */
+
+.footerDivider {
+  height: 1px;
+  background: rgba(15, 17, 19, 0.07);
+  margin: 2px 0;
+}
+
+/* ── Bouton Sauvegarder brouillon ── */
+
+.saveDraftBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(15, 17, 19, 0.38);
+  font-size: 0.76rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.saveDraftBtn:hover {
+  background: rgba(15, 17, 19, 0.05);
+  color: var(--color-text);
+}
+
+/* ════════════════════════════════════════════════════════════════
+   Modale Sauvegarder le Brouillon
+   ════════════════════════════════════════════════════════════════ */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(10, 12, 14, 0.48);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: overlayIn 180ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes overlayIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.modalCard {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 22px;
+  background: var(--color-surface, #fff);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.22), 0 4px 16px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  animation: cardIn 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: scale(0.94) translateY(12px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.modalHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 24px 24px 0;
+}
+
+.modalIconWrap {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: rgba(15, 17, 19, 0.06);
+  color: var(--color-text);
+}
+
+.modalTitle {
+  margin: 0 0 4px;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.modalSubtitle {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--color-muted);
+  line-height: 1.45;
+}
+
+.modalBody {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modalLabel {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.modalInput {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid rgba(15, 17, 19, 0.14);
+  border-radius: 12px;
+  background: var(--color-bg, #fafafa);
+  font-family: inherit;
+  font-size: 0.92rem;
+  font-weight: 500;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.modalInput::placeholder {
+  color: rgba(15, 17, 19, 0.28);
+}
+
+.modalInput:focus {
+  border-color: #1d1d1f;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+}
+
+.modalFooter {
+  display: flex;
+  gap: 10px;
+  padding: 0 24px 24px;
+}
+
+.modalCancelBtn {
+  flex: 1;
+  padding: 12px 16px;
+  border: 1.5px solid rgba(15, 17, 19, 0.13);
+  border-radius: 12px;
+  background: transparent;
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+}
+
+.modalCancelBtn:hover {
+  background: rgba(15, 17, 19, 0.05);
+  color: var(--color-text);
+}
+
+.modalConfirmBtn {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 12px 16px;
+  border: none;
+  border-radius: 12px;
+  background: var(--color-dark, #0f1113);
+  font-family: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #fff;
+  cursor: pointer;
+  transition: background var(--transition-fast), transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.modalConfirmBtn:hover {
+  background: #2a2d31;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+
+.modalConfirmBtn:active {
+  transform: scale(0.98);
+  box-shadow: none;
+}
