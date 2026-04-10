@@ -1,9 +1,8 @@
 // Centralized brand and contact placeholders to keep integration changes localized.
 export const siteConfig = {
-  name: "OLDA",
-  baseline: "Objets personnalisables B2B",
-  description:
-    "Objets, tasses, accessoires et textiles personnalisables pour marques, boutiques et clients professionnels exigeants.",
+  name: "Atelier OLDA",
+  baseline: "",
+  description: "",
   navigation: [
     { label: "Catalogue", href: "/catalogue" },
     { label: "Sélection", href: "/#selection" },

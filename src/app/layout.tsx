@@ -23,18 +23,20 @@ const manrope = Manrope({
 
 export const metadata: Metadata = {
   title: {
-    default: `${siteConfig.name} | ${siteConfig.baseline}`,
-    template: `%s | ${siteConfig.name}`,
+    default: "Atelier OLDA",
+    template: "Atelier OLDA",
   },
-  description: siteConfig.description,
-  applicationName: siteConfig.name,
-  keywords: [
-    "catalogue B2B",
-    "objets personnalisables",
-    "goodies premium",
-    "textiles personnalisables",
-    "cadeaux d'affaires",
-  ],
+  description: "",
+  applicationName: "Atelier OLDA",
+  openGraph: {
+    title: "Atelier OLDA",
+    description: "",
+    siteName: "Atelier OLDA",
+  },
+  twitter: {
+    title: "Atelier OLDA",
+    description: "",
+  },
 };
 
 export default function RootLayout({

@@ -85,6 +85,7 @@ async function checkPassword(input: string, stored: string): Promise<boolean> {
 // ── NextAuth configuration ─────────────────────────────────────────
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  trustHost: true,
   providers: [
     Credentials({
       credentials: {
@@ -188,19 +189,17 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         token.strapiId = u.strapiId;
         token.groupeId = u.groupeId;
         token.groupeSlug = u.groupeSlug;
-
-        // Vérification admin : toujours basée sur ADMIN_EMAILS,
-        // quel que soit le provider (Strapi ou local).
-        const adminEmails = (process.env.ADMIN_EMAILS ?? "")
-          .split(",")
-          .map((e) => e.trim().toLowerCase())
-          .filter(Boolean);
-        const userEmail = (u.email ?? "").trim().toLowerCase();
-        token.isAdmin =
-          adminEmails.length > 0 &&
-          userEmail !== "" &&
-          adminEmails.includes(userEmail);
       }
+      // Re-vérification admin à chaque renouvellement de token (pas seulement à la connexion)
+      const adminEmails = (process.env.ADMIN_EMAILS ?? "")
+        .split(",")
+        .map((e) => e.trim().toLowerCase())
+        .filter(Boolean);
+      const tokenEmail = (token.email ?? "").trim().toLowerCase();
+      token.isAdmin =
+        adminEmails.length > 0 &&
+        tokenEmail !== "" &&
+        adminEmails.includes(tokenEmail);
       return token;
     },
     session({ session, token }) {
