@@ -2,6 +2,7 @@ import { CartSidebar } from "@/components/cart/cart-sidebar";
 import { CatalogSidebarClient } from "@/components/catalog/catalog-sidebar-client";
 import { CatalogFooter } from "@/components/layout/catalog-footer";
 import { getCatalogFamiliesData } from "@/lib/catalog-source";
+import { auth } from "@/auth";
 
 import styles from "./layout.module.css";
 
@@ -21,12 +22,16 @@ export default async function CatalogueLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const families = await getCatalogFamiliesData();
+  const [families, session] = await Promise.all([
+    getCatalogFamiliesData(),
+    auth(),
+  ]);
+  const isAdmin = session?.user?.isAdmin ?? false;
 
   return (
     <div className={styles.shell}>
       <div className={styles.leftCol}>
-        <CatalogSidebarClient families={families} />
+        <CatalogSidebarClient families={families} isAdmin={isAdmin} />
       </div>
 
       <main className={styles.centerCol}>

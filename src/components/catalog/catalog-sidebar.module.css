@@ -12,6 +12,22 @@
   overflow-y: auto;
 }
 
+/* Bouton Admin */
+.adminBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  background: #1d1d1f;
+  color: #fff;
+  border-radius: 10px;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.adminBtn:hover { background: #3a3a3c; }
+
 /* Logo */
 
 .logoLink {

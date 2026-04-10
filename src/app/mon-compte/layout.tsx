@@ -30,6 +30,11 @@ export default async function MonCompteLayout({
               <Link href="/catalogue" className={styles.navLink}>
                 Catalogue
               </Link>
+              {session.user?.isAdmin && (
+                <Link href="/admin" className={styles.adminLink}>
+                  ⚙ Administration
+                </Link>
+              )}
               <form action="/api/auth/signout" method="POST">
                 <button type="submit" className={styles.signoutBtn}>
                   Déconnexion
