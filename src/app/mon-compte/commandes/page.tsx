@@ -75,10 +75,9 @@ export default function MesCommandesPage() {
   if (error) {
     return (
       <div className={styles.state}>
-        <p className={styles.errorText}>{error}</p>
-        <p className={styles.errorSub}>
-          Vérifiez que la collection &ldquo;commande&rdquo; est créée dans votre Strapi.
-        </p>
+        <h1 className={styles.title}>Mes commandes</h1>
+        <p className={styles.emptyText}>Vous n&apos;avez pas encore de commande.</p>
+        <a href="/catalogue" className={styles.ctaLink}>Parcourir le catalogue →</a>
       </div>
     );
   }
