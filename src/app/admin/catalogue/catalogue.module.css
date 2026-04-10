@@ -323,3 +323,46 @@
   cursor: pointer;
 }
 .saveBtn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Bouton nouvelle famille */
+.newFamilleBtn {
+  padding: 9px 20px;
+  background: #0071e3;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.newFamilleBtn:hover { background: #0077ed; }
+
+/* Bouton supprimer famille */
+.delFamilleBtn {
+  padding: 6px 14px;
+  background: #fff;
+  color: #d03a2e;
+  border: 1.5px solid #d03a2e;
+  border-radius: 8px;
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.delFamilleBtn:hover { background: #d03a2e; color: #fff; }
+
+/* Bouton nouvelle catégorie */
+.newCatBtn {
+  padding: 12px 20px;
+  background: #f0f0f5;
+  border: 2px dashed #d2d2d7;
+  border-radius: 12px;
+  font-size: 14px;
+  color: #6e6e73;
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.15s;
+}
+.newCatBtn:hover { border-color: #1d1d1f; color: #1d1d1f; background: #e8e8ed; }
+
+.cardTitle { font-size: 15px; font-weight: 600; color: #1d1d1f; margin: 0 0 12px; }
