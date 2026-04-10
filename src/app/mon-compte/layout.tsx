@@ -1,4 +1,4 @@
-import { auth } from "@/auth";
+import { auth, signOut } from "@/auth";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import { Container } from "@/components/ui/container";
@@ -35,7 +35,10 @@ export default async function MonCompteLayout({
                   ⚙ Administration
                 </Link>
               )}
-              <form action="/api/auth/signout" method="POST">
+              <form action={async () => {
+                "use server";
+                await signOut({ redirectTo: "/" });
+              }}>
                 <button type="submit" className={styles.signoutBtn}>
                   Déconnexion
                 </button>
