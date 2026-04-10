@@ -208,7 +208,19 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       session.user.strapiId = token.strapiId as string | undefined;
       session.user.groupeId = token.groupeId as number | undefined;
       session.user.groupeSlug = token.groupeSlug as string | undefined;
-      session.user.isAdmin = token.isAdmin as boolean | undefined;
+
+      // Re-vérification admin à chaque requête depuis ADMIN_EMAILS
+      // (pas besoin de se déconnecter/reconnecter si la variable change)
+      const adminEmails = (process.env.ADMIN_EMAILS ?? "")
+        .split(",")
+        .map((e) => e.trim().toLowerCase())
+        .filter(Boolean);
+      const userEmail = (session.user?.email ?? "").trim().toLowerCase();
+      session.user.isAdmin =
+        adminEmails.length > 0 &&
+        userEmail !== "" &&
+        adminEmails.includes(userEmail);
+
       return session;
     },
   },
