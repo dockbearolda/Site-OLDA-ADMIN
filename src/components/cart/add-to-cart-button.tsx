@@ -55,8 +55,8 @@ export function AddToCartButton({
   // Raccourcis d'ajout rapide adaptés au MOQ
   const quickSteps = moq === 1 ? [5, 10, 25] : [moq, moq * 3, moq * 5];
 
-  /* — Produit déjà dans le panier (et animation terminée) — */
   if (inCart && phase === "idle") {
+    const gain = productPrixAchat && productPrixRevente ? (productPrixRevente - productPrixAchat) * inCart.quantity : null;
     return (
       <div className={styles.cartBlock}>
         <div className={styles.quantityRow}>
@@ -80,6 +80,11 @@ export function AddToCartButton({
             +
           </button>
         </div>
+        {gain !== null && (
+          <div className={styles.gainSummary}>
+            Gain : <span className={styles.gainAmount}>+{gain.toLocaleString("fr-FR", { minimumFractionDigits: 2 })}\u00a0€</span>
+          </div>
+        )}
         <div className={styles.quickAdd}>
           {quickSteps.map((s) => (
             <button key={s} className={styles.quickAddBtn} onClick={() => handleQuickAdd(s)}>
@@ -91,25 +96,34 @@ export function AddToCartButton({
     );
   }
 
+  const pendingGain = productPrixAchat && productPrixRevente ? (productPrixRevente - productPrixAchat) * pendingQty : null;
+
   /* — Produit pas encore dans le panier — */
   return (
     <div className={styles.addBlock}>
-      <div className={styles.pendingRow}>
-        <button
-          className={styles.qtyBtn}
-          aria-label="Diminuer"
-          onClick={() => setPendingQty((q) => Math.max(moq, q - increment))}
-        >
-          −
-        </button>
-        <span className={styles.qtyValue}>{pendingQty}</span>
-        <button
-          className={styles.qtyBtn}
-          aria-label="Augmenter"
-          onClick={() => setPendingQty((q) => q + increment)}
-        >
-          +
-        </button>
+      <div className={styles.controlRow}>
+        <div className={styles.pendingRow}>
+          <button
+            className={styles.qtyBtn}
+            aria-label="Diminuer"
+            onClick={() => setPendingQty((q) => Math.max(moq, q - increment))}
+          >
+            −
+          </button>
+          <span className={styles.qtyValue}>{pendingQty}</span>
+          <button
+            className={styles.qtyBtn}
+            aria-label="Augmenter"
+            onClick={() => setPendingQty((q) => q + increment)}
+          >
+            +
+          </button>
+        </div>
+        {pendingGain !== null && (
+          <div className={styles.gainSummary}>
+            Gain : <span className={styles.gainAmount}>+{pendingGain.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}\u00a0€</span>
+          </div>
+        )}
       </div>
 
       <button

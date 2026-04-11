@@ -119,8 +119,7 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     name: "Goodies",
     defaultMoq: 10,
     strapline: "Formats rapides à activer",
-    summary:
-      "Porte-clés, magnets et stickers pour opérations terrain, coffrets clients et revente boutique.",
+    summary: "Porte-clés, magnets et stickers pour opérations terrain, coffrets clients et revente boutique.",
     accent: "#dbe7ff",
     surface: "rgba(219, 231, 255, 0.68)",
     businessSignals: [
@@ -131,26 +130,17 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       {
         name: "Porte-Clés",
         products: [
-          product("PCP 01", "Porte-Clés Plexiglass", { moq: 10, resellerPrice: "2.50", retailPrice: "5.00" }),
-          product("PCB 01", "Porte-Clés Bois", { moq: 10, resellerPrice: "4.50", retailPrice: "9.00" }),
-          product("PCA 01", "Porte-Clés Acrylique", { moq: 10, resellerPrice: "4.50", retailPrice: "9.00" }),
-          product("PCFL 01", "Porte-Clés Flotteur Liège", { moq: 3, resellerPrice: "7.00", retailPrice: "14.00" }),
+          product("PCP 01", "Porte-Clés Plexiglass", { moq: 10, step: 10, resellerPrice: "2.50", retailPrice: "5.00", note1: "Mix logo selon disponibilité" }),
+          product("PCB 01", "Porte-Clés Bois", { moq: 10, step: 10, resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("PCA 01", "Porte-Clés Acrylique", { moq: 10, step: 10, resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("PCFL 01", "Porte-Clés Flotteur Liège", { moq: 2, step: 4, resellerPrice: "7.00", retailPrice: "14.00" }),
         ],
       },
       {
         name: "Magnets",
         products: [
-          product("MP 01", "Magnet Plexiglass"),
-          product("MB 01", "Magnet Bois"),
-          product("MA 01", "Magnet Acrylique"),
-        ],
-      },
-      {
-        name: "Sticker",
-        products: [
-          product("STI 01", "Sticker", {
-            note2: "75 x 75",
-          }),
+          product("VP 01", "Magnet Plexiglass", { moq: 10, step: 10, resellerPrice: "2.50", retailPrice: "5.00" }),
+          product("MB 01", "Magnet Bois", { moq: 10, step: 10, resellerPrice: "4.50", retailPrice: "9.00" }),
         ],
       },
     ],
@@ -159,8 +149,7 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     id: "tasses",
     name: "Tasses",
     strapline: "La famille la plus profonde du catalogue",
-    summary:
-      "Déclinaisons céramique, métal et bois avec une grande variété de coloris et un standard 350 ml bien identifié.",
+    summary: "Déclinaisons céramique, métal et bois avec une grande variété de coloris et un standard 350 ml bien identifié.",
     accent: "#dfead7",
     surface: "rgba(223, 234, 215, 0.72)",
     businessSignals: [
@@ -170,35 +159,36 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     subfamilies: [
       {
         name: "Tasse Céramique FUCK",
-        products: buildCeramicProducts("TCF", {
-          note2: mugCapacityNote,
-          moq: 3,
-          resellerPrice: "8 €",
-          retailPrice: "16 €",
-        }),
+        products: [
+          product("TCF 02", "Tasse Orange - Blanc", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+          product("TCF 03", "Tasse Rose - Blanc", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+          product("TCF 05", "Tasse Bleu - Blanc", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+          product("TCF 06", "Tasse Noir - Blanc", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+          product("TCF 10", "Tasse Blanc - Rouge", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+          product("TCF 14", "Tasse Noir - Jaune", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+          product("TCF 15", "Tasse Noir - Rouge", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+        ],
       },
       {
         name: "Tasse Céramique",
-        products: buildCeramicProducts("TC", {
-          note1: stockDesignNote,
-          note2: mugCapacityNote,
-          moq: 3,
-          resellerPrice: "8 €",
-          retailPrice: "16 €",
-        }),
+        products: [
+          product("TC 03", "Tasse Rose - Blanc", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+          product("TC 04", "Tasse Bleu - Blanc", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+          product("TC 09", "Tasse Blanc - Orange", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+          product("TC 10", "Tasse Blanc - Rouge", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+          product("TC 15", "Tasse Noir - Rouge", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+          product("TC 16", "Tasse Noir - Vert", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.23", retailPrice: "18.00" }),
+        ],
       },
       {
         name: "Tasse Métal",
         products: [
-          product("TM 01", "Tasse Métal Rouge", { resellerPrice: "8 €", retailPrice: "16 €" }),
-          product("TM 02", "Tasse Métal Blanc", { resellerPrice: "8 €", retailPrice: "16 €" }),
-          product("TM 03", "Tasse Métal Jaune", { resellerPrice: "8 €", retailPrice: "16 €" }),
-          product("TM 04", "Tasse Métal Bleu", { resellerPrice: "8 €", retailPrice: "16 €" }),
+          product("TM 04", "Tasse Métal Bleu", { note1: stockDesignNote, note2: "?", moq: 3, step: 3, resellerPrice: "9.00", retailPrice: "15.00" }),
         ],
       },
       {
         name: "Autres Tasses",
-        products: [product("TB-01", "Tasse Bois", { resellerPrice: "8 €", retailPrice: "16 €" })],
+        products: [product("TB-01", "Tasse Bois", { resellerPrice: "15.03", retailPrice: "22.00", moq: 1 })],
       },
     ],
   },
@@ -206,8 +196,7 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     id: "accessoires",
     name: "Accessoires",
     strapline: "Le catalogue de complément qui crédibilise l'offre",
-    summary:
-      "Accessoires du quotidien, art de la table, papeterie et jeux pour enrichir une offre B2B sans brouiller la lecture.",
+    summary: "Accessoires du quotidien, art de la table, papeterie et jeux pour enrichir une offre B2B sans brouiller la lecture.",
     accent: "#f4dc95",
     surface: "rgba(244, 220, 149, 0.72)",
     businessSignals: [
@@ -218,62 +207,25 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       {
         name: "Du quotidien",
         products: [
-          product("SMA 01", "Support Mobile Acrylique"),
-          product("SMB 01", "Support Mobile Bois"),
-          product("PS 01", "Porte Sac", { moq: 3 }),
-          product("FBC 01", "Flasque Bois Clair"),
-          product("FCF 01", "Flasque Bois Foncé"),
-          product("LBF 01", "Limonadier Bois Foncé"),
-          product("LBC 01", "Limonadier Bois Clair"),
-          product("IVL 01", "Identificateur Valise Liège"),
-          product("IVS 01", "Identificateur Valise Similicuir"),
-          product("PML 01", "Petit Miroir Liège"),
-          product("CMB 01", "Couteau Multi Bois"),
-          product("CML 01", "Couteau Multi Liège"),
-          product("PBA 01", "Pince à billet Argent"),
+          product("FCF 01", "Flasque Bois Foncé", { resellerPrice: "12.03", retailPrice: "22.00", moq: 2, step: 2 }),
+          product("LBF 01", "Limonadier Bois Foncé", { resellerPrice: "6.00", retailPrice: "12.00", moq: 4, step: 4 }),
         ],
       },
       {
         name: "Art de la table",
         products: [
-          product("BB 01", "Bouchon Bois"),
-          product("DPL 01", "Dessous de plat Liège"),
-          product("DVL 01", "Dessous de Verre Liège (par 1)"),
-          product("PL 01", "Plateau en Liège"),
+          product("DVL 01", "Dessous de Verre Liège (par 1)", { resellerPrice: "3.00", retailPrice: "6.00", moq: 12, step: 24 }),
         ],
       },
       {
         name: "Papeterie",
-        products: [
-          product("CPB 01", "Crayon papier bois", {
-            moq: 10,
-          }),
-          product("SBB 01", "Stylo à bille en bois"),
-          product("BNLP", "Bloc Note Liège A6 Petit", {
-            note1: stockDesignNote,
-          }),
-          product("BNSP", "Bloc Note Similicuir A6 Petit", {
-            note1: stockDesignNote,
-          }),
-          product("BNLG", "Bloc Note Liège A5 Grand", {
-            note1: stockDesignNote,
-          }),
-          product("BNSG", "Bloc Note Similicuir A5 Grand", {
-            note1: stockDesignNote,
-          }),
-          product("CP 01", "Carte Postale A6 (105 x 148)"),
-          product("AT 01", "Affiche A3 + Tube (297 x 420)"),
-        ],
+        products: [],
       },
       {
         name: "Jeux",
         products: [
-          product("MOR 01", "Morpion"),
-          product("DOM 01", "Dominos"),
-          product("MIK 01", "Mikado"),
-          product("YO 01", "Yoyo"),
-          product("JDC 01", "Jeux de Cartes"),
-          product("RB 01", "Raquette Bois"),
+          product("DOM 01", "Dominos", { resellerPrice: "7.50", retailPrice: "15.00", moq: 2, step: 4 }),
+          product("MIK 01", "Mikado", { resellerPrice: "7.50", retailPrice: "15.00", moq: 2, step: 4 }),
         ],
       },
     ],
@@ -282,8 +234,7 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     id: "offres-speciales",
     name: "Offres spéciales",
     strapline: "Une capsule à mettre en avant avec parcimonie",
-    summary:
-      "Une sélection plus resserrée pour créer un sentiment d'exclusivité, de série courte ou de proposition événementielle.",
+    summary: "Une sélection plus resserrée pour créer un sentiment d'exclusivité, de série courte ou de proposition événementielle.",
     accent: "#dcffca",
     surface: "rgba(220, 255, 202, 0.72)",
     businessSignals: [
@@ -294,12 +245,8 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       {
         name: "Sélection spéciale",
         products: [
-          product("PCL 01", "Porte Carte Liège"),
-          product("PMO 01", "Porte Monnaie Liège"),
-          product("BBB 01", "Boîte à bijoux en bois"),
-          product("DB 01", "Décapsuleur Bois"),
-          product("BCC 01", "Boîte à clic-clac"),
-          product("CL 01", "Cendrier Liège"),
+          product("PML 01", "Porte Monnaie Liège", { resellerPrice: "4.50", retailPrice: "9.00", moq: 2, step: 2 }),
+          product("BBB 01", "Boîte à bijoux bois", { resellerPrice: "4.50", retailPrice: "9.00", moq: 2, step: 2 }),
         ],
       },
     ],
@@ -308,8 +255,7 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     id: "textiles",
     name: "Textiles",
     strapline: "Entrée propre dans le soft goods",
-    summary:
-      "Pochettes et sacs pour compléter l'offre d'objets avec une base textile simple, lisible et facilement scénarisable.",
+    summary: "Pochettes et sacs pour compléter l'offre d'objets avec une base textile simple, lisible et facilement scénarisable.",
     accent: "#efc58d",
     surface: "rgba(239, 197, 141, 0.7)",
     businessSignals: [
@@ -319,25 +265,11 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     subfamilies: [
       {
         name: "Pochettes",
-        products: [
-          product("P-001", "Trousse de toilette"),
-          product("P-002", "Pochette EarthAware Bio S"),
-          product("P-003", "Pochette EarthAware Bio L"),
-          product("P-004", "Pochette Zippée S"),
-          product("P-005", "Pochette Zippée M"),
-          product("P-006", "Pochette Vintage"),
-          product("P-007", "Pochette Coton S"),
-          product("P-008", "Pochette Coton M"),
-        ],
+        products: [],
       },
       {
         name: "Sacs",
-        products: [
-          product("S-001", "Sac de plage Naturel"),
-          product("S-002", "Sac de plage XL"),
-          product("S-003", "Sac Polochon en Molleton"),
-          product("S-004", "Tote Bag en Coton BIO"),
-        ],
+        products: [],
       },
     ],
   },

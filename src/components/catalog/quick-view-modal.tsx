@@ -116,11 +116,16 @@ export function QuickViewModal({ product, onClose }: Props) {
               </div>
               {prixRevente && prixAchat && (
                 <div className={styles.pricingRetail}>
-                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-                  </svg>
-                  <span>{formatPrice(prixRevente)}</span>
-                  <span className={styles.pricingRetailLabel}>Prix de vente boutique conseillé TTC</span>
+                  <div className={styles.pricingRetailMain}>
+                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+                    </svg>
+                    <span>{formatPrice(prixRevente)}</span>
+                    <span className={styles.pricingRetailLabel}>Prix de vente boutique conseillé TTC</span>
+                  </div>
+                  <div className={styles.pricingGain}>
+                    Votre bénéfice par unité : <strong>+{formatPrice(prixRevente - prixAchat)}</strong>
+                  </div>
                 </div>
               )}
             </div>

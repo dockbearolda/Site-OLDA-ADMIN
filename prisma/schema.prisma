@@ -46,6 +46,7 @@ model Produit {
   stock         Int?
   prixPublic    Float?
   prixRevendeur Float?
+  step          Int?
   imageUrl      String?
   enLigne       Boolean   @default(true)
   categorieId   Int

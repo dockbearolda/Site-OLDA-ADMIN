@@ -5,6 +5,35 @@
   gap: 8px;
 }
 
+.gainSummary {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-muted);
+  white-space: nowrap;
+}
+
+.gainAmount {
+  color: #27ae60;
+  font-weight: 800;
+}
+
+.controlRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .controlRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+}
+
 /* ── Stepper quantité (avant ajout) ── */
 .pendingRow {
   display: flex;

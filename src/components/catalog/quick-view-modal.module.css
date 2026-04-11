@@ -173,6 +173,13 @@
 
 .pricingRetail {
   display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.pricingRetailMain {
+  display: flex;
   align-items: center;
   gap: 5px;
   color: var(--color-muted);
@@ -184,6 +191,20 @@
   font-size: 0.7rem;
   color: var(--color-muted);
   opacity: 0.7;
+}
+
+.pricingGain {
+  padding: 6px 12px;
+  background: rgba(39, 174, 96, 0.08);
+  border: 1px solid rgba(39, 174, 96, 0.2);
+  border-radius: 10px;
+  color: #27ae60;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.pricingGain strong {
+  font-weight: 800;
 }
 
 @keyframes fadeIn {
