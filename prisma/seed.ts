@@ -68,7 +68,7 @@ const catalogData = [
         slug: "autres-tasses",
         ordre: 3,
         produits: [
-          { ref: "TB-01", label: "Tasse Bois", moq: 1, prixRevendeur: 15.03, prixPublic: 22, enLigne: true },
+          { ref: "TB-01", label: "Tasse Bois", moq: 1, prixRevendeur: 15.00, prixPublic: 22, enLigne: true },
         ],
       },
     ],
@@ -126,7 +126,7 @@ const catalogData = [
         slug: "du-quotidien",
         ordre: 0,
         produits: [
-          { ref: "FCF 01", label: "Flasque Bois Foncé", moq: 2, step: 2, prixRevendeur: 12.03, prixPublic: 22, enLigne: true },
+          { ref: "FCF 01", label: "Flasque Bois Foncé", moq: 2, step: 2, prixRevendeur: 12.00, prixPublic: 22, enLigne: true },
           { ref: "LBF 01", label: "Limonadier Bois Foncé", moq: 4, step: 4, prixRevendeur: 6, prixPublic: 12, enLigne: true },
           { ref: "CMB 01", label: "Couteau Multi Bois", moq: 4, step: 4, prixRevendeur: 9, prixPublic: 18, enLigne: false },
           { ref: "CML 01", label: "Couteau Multi Liège", moq: 4, step: 4, prixRevendeur: 9, prixPublic: 18, enLigne: false },

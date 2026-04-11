@@ -188,7 +188,7 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       },
       {
         name: "Autres Tasses",
-        products: [product("TB-01", "Tasse Bois", { resellerPrice: "15.03", retailPrice: "22.00", moq: 1 })],
+        products: [product("TB-01", "Tasse Bois", { resellerPrice: "15.00", retailPrice: "22.00", moq: 1 })],
       },
     ],
   },
@@ -207,7 +207,7 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       {
         name: "Du quotidien",
         products: [
-          product("FCF 01", "Flasque Bois Foncé", { resellerPrice: "12.03", retailPrice: "22.00", moq: 2, step: 2 }),
+          product("FCF 01", "Flasque Bois Foncé", { resellerPrice: "12.00", retailPrice: "22.00", moq: 2, step: 2 }),
           product("LBF 01", "Limonadier Bois Foncé", { resellerPrice: "6.00", retailPrice: "12.00", moq: 4, step: 4 }),
         ],
       },
