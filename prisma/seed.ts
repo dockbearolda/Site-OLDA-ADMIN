@@ -150,7 +150,7 @@ const catalogData = [
         produits: [
           { ref: "BB 01", label: "Bouchon Bois", prixRevendeur: 4.5, prixPublic: 9 },
           { ref: "DPL 01", label: "Dessous de plat Liège", prixRevendeur: 7.5, prixPublic: 15 },
-          { ref: "DVL 01", label: "Dessous de Verre Liège (par 1)", moq: 12, step: 24, prixRevendeur: 3, prixPublic: 6 },
+          { ref: "DVL 01", label: "Dessous de Verre Liège x1", moq: 12, step: 24, prixRevendeur: 3, prixPublic: 6 },
           { ref: "PL 01", label: "Plateau en Liège", prixRevendeur: 12, prixPublic: 24 },
         ],
       },

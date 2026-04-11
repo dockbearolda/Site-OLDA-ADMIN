@@ -243,7 +243,7 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
         products: [
           product("BB 01", "Bouchon Bois", { resellerPrice: "4.50", retailPrice: "9.00" }),
           product("DPL 01", "Dessous de plat Liège", { resellerPrice: "7.50", retailPrice: "15.00" }),
-          product("DVL 01", "Dessous de Verre Liège (par 1)", { resellerPrice: "3.00", retailPrice: "6.00", moq: 12, step: 24 }),
+          product("DVL 01", "Dessous de Verre Liège x1", { resellerPrice: "3.00", retailPrice: "6.00", moq: 12, step: 24 }),
           product("PL 01", "Plateau en Liège", { resellerPrice: "12.00", retailPrice: "24.00" }),
         ],
       },
