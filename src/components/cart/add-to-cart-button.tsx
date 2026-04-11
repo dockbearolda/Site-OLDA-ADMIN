@@ -82,7 +82,7 @@ export function AddToCartButton({
         </div>
         {gain !== null && (
           <div className={styles.gainSummary}>
-            Gain : <span className={styles.gainAmount}>+{Math.round(gain).toLocaleString("fr-FR")}&nbsp;€</span>
+            Bénéfice total : <span className={styles.gainAmount}>+{Math.round(gain).toLocaleString("fr-FR")}&nbsp;€</span>
           </div>
         )}
         <div className={styles.quickAdd}>
@@ -121,7 +121,7 @@ export function AddToCartButton({
         </div>
         {pendingGain !== null && (
           <div className={styles.gainSummary}>
-            Gain : <span className={styles.gainAmount}>+{Math.round(pendingGain).toLocaleString("fr-FR")}&nbsp;€</span>
+            Bénéfice total : <span className={styles.gainAmount}>+{Math.round(pendingGain).toLocaleString("fr-FR")}&nbsp;€</span>
           </div>
         )}
       </div>

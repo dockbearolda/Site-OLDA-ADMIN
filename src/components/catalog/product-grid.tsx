@@ -133,7 +133,7 @@ function PricingBlock({ achat, revente }: { achat?: number; revente?: number }) 
       )}
       {gain !== null && (
         <div className={styles.priceGain}>
-          Votre bénéfice : <span className={styles.gainValue}>+{Math.round(gain).toLocaleString("fr-FR")} €</span>
+          Votre bénéfice par produit : <span className={styles.gainValue}>+{Math.round(gain).toLocaleString("fr-FR")} €</span>
         </div>
       )}
     </div>
