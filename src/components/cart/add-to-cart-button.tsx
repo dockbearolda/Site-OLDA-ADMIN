@@ -4,7 +4,6 @@ import { useCallback, useState } from "react";
 
 import { useCart } from "@/lib/cart-context";
 import { useToast } from "@/lib/toast-context";
-import { QuantitySlider } from "./quantity-slider";
 
 import styles from "./add-to-cart-button.module.css";
 
@@ -15,7 +14,7 @@ type AddToCartButtonProps = {
   productPrixRevente?: number;
   /** Minimum de commande — lu depuis catalog.ts, pas hardcodé */
   moq?: number;
-  /** Palier du slider (= moq si non spécifié) */
+  /** Palier des boutons +/− (= moq si non spécifié) */
   step?: number;
 };
 
@@ -29,10 +28,10 @@ export function AddToCartButton({
 }: AddToCartButtonProps) {
   const { add, items, updateQuantity, remove } = useCart();
   const { toast } = useToast();
+  const increment = step ?? moq;
   const [pendingQty, setPendingQty] = useState(moq);
   const [phase, setPhase] = useState<"idle" | "loading" | "added">("idle");
 
-  const sliderStep = step ?? moq;
   const inCart = items.find((i) => i.ref === productRef);
 
   const handleAdd = useCallback(() => {
@@ -95,22 +94,11 @@ export function AddToCartButton({
   /* — Produit pas encore dans le panier — */
   return (
     <div className={styles.addBlock}>
-      {/* Slider de quantité — desktop */}
-      <div className={styles.sliderWrap}>
-        <QuantitySlider
-          moq={moq}
-          step={sliderStep}
-          value={pendingQty}
-          onChange={setPendingQty}
-        />
-      </div>
-
-      {/* Fallback +/− sur très petits écrans */}
       <div className={styles.pendingRow}>
         <button
           className={styles.qtyBtn}
           aria-label="Diminuer"
-          onClick={() => setPendingQty((q) => Math.max(moq, q - moq))}
+          onClick={() => setPendingQty((q) => Math.max(moq, q - increment))}
         >
           −
         </button>
@@ -118,7 +106,7 @@ export function AddToCartButton({
         <button
           className={styles.qtyBtn}
           aria-label="Augmenter"
-          onClick={() => setPendingQty((q) => q + moq)}
+          onClick={() => setPendingQty((q) => q + increment)}
         >
           +
         </button>

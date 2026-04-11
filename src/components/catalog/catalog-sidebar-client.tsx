@@ -4,8 +4,6 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import React from "react";
 
-import { useCart } from "@/lib/cart-context";
-import { useCartDrawer } from "@/lib/cart-drawer-context";
 import { slugifyLabel } from "@/data/catalog";
 import type { CatalogFamily } from "@/data/catalog";
 
@@ -62,8 +60,6 @@ type Props = {
 export function CatalogSidebarClient({ families, isAdmin }: Props) {
   const pathname = usePathname();
   const router = useRouter();
-  const { totalItems, items } = useCart();
-  const { open } = useCartDrawer();
 
   // /catalogue → ["catalogue"]
   // /catalogue/goodies → ["catalogue", "goodies"]
@@ -83,23 +79,8 @@ export function CatalogSidebarClient({ families, isAdmin }: Props) {
          * [slot panier | logo centré | slot fantôme]
          */}
         <div className={styles.mobileBar}>
-          {/* Slot gauche — bouton panier compact (mobile uniquement) */}
-          <div className={styles.mobileBarSlot}>
-            {items.length > 0 && (
-              <button
-                className={styles.mobileCartBtn}
-                onClick={open}
-                aria-label={`Ouvrir ma sélection (${totalItems} article${totalItems > 1 ? "s" : ""})`}
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                  <circle cx="9" cy="21" r="1" />
-                  <circle cx="20" cy="21" r="1" />
-                  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6" />
-                </svg>
-                <span className={styles.mobileCartBadge}>{totalItems}</span>
-              </button>
-            )}
-          </div>
+          {/* Slot gauche — fantôme pour équilibrer le centrage du logo */}
+          <div className={styles.mobileBarSlot} aria-hidden="true" />
 
           {/* Logo — centré */}
           <Link href="/" className={styles.logoLink} aria-label="Accueil OLDA">
