@@ -124,7 +124,7 @@ export function QuickViewModal({ product, onClose }: Props) {
                     <span className={styles.pricingRetailLabel}>Prix de vente boutique conseillé TTC</span>
                   </div>
                   <div className={styles.pricingGain}>
-                    Votre bénéfice par unité : <strong>+{formatPrice(prixRevente - prixAchat)}</strong>
+                    Votre bénéfice par unité : <strong>+{Math.round(prixRevente - prixAchat).toLocaleString("fr-FR")} €</strong>
                   </div>
                 </div>
               )}

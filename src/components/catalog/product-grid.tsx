@@ -133,7 +133,7 @@ function PricingBlock({ achat, revente }: { achat?: number; revente?: number }) 
       )}
       {gain !== null && (
         <div className={styles.priceGain}>
-          Votre bénéfice : <span className={styles.gainValue}>+{formatPrice(gain)}</span>
+          Votre bénéfice : <span className={styles.gainValue}>+{Math.round(gain).toLocaleString("fr-FR")} €</span>
         </div>
       )}
     </div>
@@ -248,7 +248,7 @@ const ProductListRow = memo(function ProductListRow({ item, onQuickView }: CardP
             )}
           </div>
           {revente && achat && (
-            <span className={styles.listPriceGain}>Gain +{formatPrice(revente - achat)}</span>
+            <span className={styles.listPriceGain}>Gain +{Math.round(revente - achat).toLocaleString("fr-FR")} €</span>
           )}
           {coef !== null && (
             <span className={styles.listPriceCoef} title="Coefficient revendeur">
