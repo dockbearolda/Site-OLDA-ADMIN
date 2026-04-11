@@ -60,6 +60,9 @@ const catalogData = [
         slug: "tasse-metal",
         ordre: 2,
         produits: [
+          { ref: "TM 01", label: "Tasse Métal Rouge", note1: "Choix de designs en fonction du stock", note2: "?", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15, enLigne: true },
+          { ref: "TM 02", label: "Tasse Métal Blanc", note1: "Choix de designs en fonction du stock", note2: "?", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15, enLigne: true },
+          { ref: "TM 03", label: "Tasse Métal Jaune", note1: "Choix de designs en fonction du stock", note2: "?", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15, enLigne: true },
           { ref: "TM 04", label: "Tasse Métal Bleu", note1: "Choix de designs en fonction du stock", note2: "?", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15, enLigne: true },
         ],
       },

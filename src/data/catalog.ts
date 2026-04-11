@@ -183,6 +183,9 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       {
         name: "Tasse Métal",
         products: [
+          product("TM 01", "Tasse Métal Rouge", { note1: stockDesignNote, note2: "?", moq: 3, step: 3, resellerPrice: "9.00", retailPrice: "15.00" }),
+          product("TM 02", "Tasse Métal Blanc", { note1: stockDesignNote, note2: "?", moq: 3, step: 3, resellerPrice: "9.00", retailPrice: "15.00" }),
+          product("TM 03", "Tasse Métal Jaune", { note1: stockDesignNote, note2: "?", moq: 3, step: 3, resellerPrice: "9.00", retailPrice: "15.00" }),
           product("TM 04", "Tasse Métal Bleu", { note1: stockDesignNote, note2: "?", moq: 3, step: 3, resellerPrice: "9.00", retailPrice: "15.00" }),
         ],
       },
