@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { saveCommandeStrapi } from "@/lib/strapi";
 
 /* ── Limites de validation ── */
@@ -501,54 +501,41 @@ export async function POST(request: Request) {
     .then(() => console.log(`[commande] 📦 Sauvegarde Strapi OK pour ${ref}`))
     .catch((err) => console.error("[strapi] Erreur sauvegarde commande:", err));
 
-  /* — Vérification SMTP — */
-  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
-    console.error(`[commande] ❌ SMTP non configuré. USER: ${process.env.SMTP_USER ? "OK" : "MANQUANT"}, PASS: ${process.env.SMTP_PASS ? "OK" : "MANQUANT"}`);
+  /* — Vérification clé Resend — */
+  if (!process.env.RESEND_API_KEY) {
+    console.error("[commande] ❌ RESEND_API_KEY manquante");
     return NextResponse.json(
       { error: "Le service d'email n'est pas configuré sur le serveur." },
       { status: 500 }
     );
   }
 
-  /* — Envoi — */
+  /* — Envoi via Resend HTTP API — */
   try {
-    const host = process.env.SMTP_HOST || "smtp.gmail.com";
-    const port = Number(process.env.SMTP_PORT) || 465; // Utilisation du port 465 par défaut pour plus de fiabilité
-    const secure = port === 465;
+    const resend = new Resend(process.env.RESEND_API_KEY);
+    const from = process.env.SMTP_FROM || "OLDA Commandes <onboarding@resend.dev>";
+    const adminTo = process.env.ORDER_EMAIL || process.env.ADMIN_EMAILS || "";
 
-    console.log(`[commande] 📧 Tentative envoi SMTP — ${host}:${port} (secure: ${secure})`);
-
-    const transporter = nodemailer.createTransport({
-      host,
-      port,
-      secure,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
-      connectionTimeout: 10_000,
-      greetingTimeout: 10_000,
-      socketTimeout: 15_000,
-    });
+    console.log(`[commande] 📧 Tentative envoi Resend — from: ${from}`);
 
     const pdfAttachment = pdfBuffer
-      ? [{ filename: `devis-${ref}.pdf`, content: pdfBuffer, contentType: "application/pdf" }]
+      ? [{ filename: `devis-${ref}.pdf`, content: pdfBuffer }]
       : [];
 
     await Promise.all([
       /* Email admin */
-      transporter.sendMail({
-        from: process.env.SMTP_FROM || process.env.SMTP_USER,
-        to: process.env.ORDER_EMAIL || process.env.SMTP_USER,
-        replyTo: email,
+      resend.emails.send({
+        from,
+        to: adminTo,
+        reply_to: email,
         subject: `🛒 ${ref} — ${company} (${totalItems} article${totalItems > 1 ? "s" : ""})`,
         text: adminText,
         html: adminHtml,
         attachments: pdfAttachment,
       }),
       /* Email client */
-      transporter.sendMail({
-        from: process.env.SMTP_FROM || process.env.SMTP_USER,
+      resend.emails.send({
+        from,
         to: email,
         subject: `Votre commande OLDA — ${ref}`,
         text: clientText,
