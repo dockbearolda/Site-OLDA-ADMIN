@@ -6,6 +6,8 @@ import { CartDrawer } from "@/components/cart/cart-drawer";
 
 import { CartProvider } from "@/lib/cart-context";
 import { CartDrawerProvider } from "@/lib/cart-drawer-context";
+import { ProjectsProvider } from "@/lib/projects-context";
+import { ProjectsDrawerProvider } from "@/lib/projects-drawer-context";
 
 import { ToastProvider } from "@/lib/toast-context";
 import { AuthSessionProvider } from "@/lib/session-provider";
@@ -59,13 +61,17 @@ export default function RootLayout({
            * car ProjectsProvider consomme useCart() en interne.
            */}
           <CartProvider>
+            <ProjectsProvider>
               <CartDrawerProvider>
+                <ProjectsDrawerProvider>
                   <ToastProvider>
                     {children}
                     <CartButton />
                     <CartDrawer />
                   </ToastProvider>
+                </ProjectsDrawerProvider>
               </CartDrawerProvider>
+            </ProjectsProvider>
           </CartProvider>
         </AuthSessionProvider>
       </body>
