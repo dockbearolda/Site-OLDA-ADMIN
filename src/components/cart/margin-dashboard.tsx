@@ -13,7 +13,7 @@ function fmt(n: number): string {
 
 export function MarginDashboard({ vertical = false }: { vertical?: boolean }) {
   const { hasPrices, totalB2B, totalRevente, margeNette, tauxMarge } = useCart();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
 
   if (!hasPrices) return null;
 
