@@ -8,6 +8,15 @@ const MAX_MESSAGE_LENGTH = 2000;
 const MAX_ITEMS = 100;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/* — Configuration de la limite de taille du corps (Largeur pour les PDF) — */
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: "4mb",
+    },
+  },
+};
+
 /* ── Rate limiting en mémoire : 10 requêtes / heure / IP ── */
 const rateMap = new Map<string, { count: number; resetAt: number }>();
 const RATE_LIMIT = 10;
@@ -369,11 +378,14 @@ export async function POST(request: Request) {
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? "unknown";
 
   if (isRateLimited(ip)) {
+    console.warn(`[commande] ⚠️ Rate limit atteint pour l'IP: ${ip}`);
     return NextResponse.json(
       { error: "Trop de requêtes. Réessayez dans une heure." },
       { status: 429 },
     );
   }
+
+  console.log(`[commande] 📥 Nouvelle requête reçue de ${ip}`);
 
   /* — Lecture et validation du corps — */
   let body: unknown;
@@ -451,6 +463,8 @@ export async function POST(request: Request) {
   const now = new Date();
   const ref = orderRef(now);
 
+  console.log(`[commande] 📝 Commande validée — ref: ${ref}, items: ${items.length}, total: ${fmtEur(totalB2B)}`);
+
   /* — PDF base64 optionnel (généré côté client) — */
   let pdfBuffer: Buffer | null = null;
   if (typeof raw.pdfBase64 === "string" && raw.pdfBase64.startsWith("data:application/pdf;base64,")) {
@@ -483,16 +497,31 @@ export async function POST(request: Request) {
     total_achat_ht: totalB2B,
     total_revente: totalRevente,
     marge_projetee: margeNette,
-  }).catch((err) => console.error("[strapi] Erreur sauvegarde commande:", err));
+  })
+    .then(() => console.log(`[commande] 📦 Sauvegarde Strapi OK pour ${ref}`))
+    .catch((err) => console.error("[strapi] Erreur sauvegarde commande:", err));
+
+  /* — Vérification SMTP — */
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS) {
+    console.error(`[commande] ❌ SMTP non configuré. USER: ${process.env.SMTP_USER ? "OK" : "MANQUANT"}, PASS: ${process.env.SMTP_PASS ? "OK" : "MANQUANT"}`);
+    return NextResponse.json(
+      { error: "Le service d'email n'est pas configuré sur le serveur." },
+      { status: 500 }
+    );
+  }
 
   /* — Envoi — */
   try {
-    console.log(`[commande] Tentative envoi — ref: ${ref}, smtp: ${process.env.SMTP_HOST ?? "smtp.gmail.com"}:${process.env.SMTP_PORT ?? 587}, user: ${process.env.SMTP_USER ?? "(non défini)"}`);
+    const host = process.env.SMTP_HOST || "smtp.gmail.com";
+    const port = Number(process.env.SMTP_PORT) || 465; // Utilisation du port 465 par défaut pour plus de fiabilité
+    const secure = port === 465;
+
+    console.log(`[commande] 📧 Tentative envoi SMTP — ${host}:${port} (secure: ${secure})`);
 
     const transporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST || "smtp.gmail.com",
-      port: Number(process.env.SMTP_PORT) || 587,
-      secure: false,
+      host,
+      port,
+      secure,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
