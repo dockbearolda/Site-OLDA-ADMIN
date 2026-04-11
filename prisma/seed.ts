@@ -263,7 +263,9 @@ async function main() {
         const p = produit as {
           ref: string; label: string;
           note1?: string; note2?: string;
-          moq?: number; prixRevendeur?: number; prixPublic?: number;
+          moq?: number; step?: number;
+          prixRevendeur?: number; prixPublic?: number;
+          enLigne?: boolean;
         };
         await prisma.produit.upsert({
           where: { reference: p.ref },
