@@ -4,30 +4,19 @@ import { useCallback, useState } from "react";
 
 import { useCart } from "@/lib/cart-context";
 import { useToast } from "@/lib/toast-context";
+import { QuantitySlider } from "./quantity-slider";
 
 import styles from "./add-to-cart-button.module.css";
-
-/**
- * Retourne le minimum de commande (MOQ) d'un produit à partir de sa référence.
- * Calculé côté client pour rester indépendant du cache serveur.
- */
-function getProductMOQ(ref: string): number {
-  // Tasses Céramique (TC xx / TCF xx)
-  if (/^TCF?\s/.test(ref)) return 3;
-  // Porte Sac
-  if (ref === "PS 01") return 3;
-  // Goodies : Porte-Clés, Magnets, Stickers
-  if (/^(PCP|PCB|PCA|PCFL|MP|MB|MA|STI)\s/.test(ref)) return 10;
-  // Crayon papier bois
-  if (/^CPB\s/.test(ref)) return 10;
-  return 1;
-}
 
 type AddToCartButtonProps = {
   productRef: string;
   productLabel: string;
   productPrixAchat?: number;
   productPrixRevente?: number;
+  /** Minimum de commande — lu depuis catalog.ts, pas hardcodé */
+  moq?: number;
+  /** Palier du slider (= moq si non spécifié) */
+  step?: number;
 };
 
 export function AddToCartButton({
@@ -35,13 +24,15 @@ export function AddToCartButton({
   productLabel,
   productPrixAchat,
   productPrixRevente,
+  moq = 1,
+  step,
 }: AddToCartButtonProps) {
-  const moq = getProductMOQ(productRef);
   const { add, items, updateQuantity, remove } = useCart();
   const { toast } = useToast();
   const [pendingQty, setPendingQty] = useState(moq);
   const [phase, setPhase] = useState<"idle" | "loading" | "added">("idle");
 
+  const sliderStep = step ?? moq;
   const inCart = items.find((i) => i.ref === productRef);
 
   const handleAdd = useCallback(() => {
@@ -91,9 +82,9 @@ export function AddToCartButton({
           </button>
         </div>
         <div className={styles.quickAdd}>
-          {quickSteps.map((step) => (
-            <button key={step} className={styles.quickAddBtn} onClick={() => handleQuickAdd(step)}>
-              +{step}
+          {quickSteps.map((s) => (
+            <button key={s} className={styles.quickAddBtn} onClick={() => handleQuickAdd(s)}>
+              +{s}
             </button>
           ))}
         </div>
@@ -104,6 +95,17 @@ export function AddToCartButton({
   /* — Produit pas encore dans le panier — */
   return (
     <div className={styles.addBlock}>
+      {/* Slider de quantité — desktop */}
+      <div className={styles.sliderWrap}>
+        <QuantitySlider
+          moq={moq}
+          step={sliderStep}
+          value={pendingQty}
+          onChange={setPendingQty}
+        />
+      </div>
+
+      {/* Fallback +/− sur très petits écrans */}
       <div className={styles.pendingRow}>
         <button
           className={styles.qtyBtn}

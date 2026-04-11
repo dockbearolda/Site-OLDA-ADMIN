@@ -5,6 +5,7 @@ export type CatalogProduct = {
   note2?: string;
   minimumOrder?: string;
   moq?: number;        // minimum de commande fonctionnel (multiple obligatoire)
+  step?: number;       // palier du slider de quantité (= moq par défaut)
   retailPrice?: string;
   resellerPrice?: string;
   stock?: number;      // inventaire réel — connecter à l'API Strapi ou inventaire

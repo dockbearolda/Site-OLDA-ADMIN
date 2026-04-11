@@ -429,6 +429,7 @@ function ProductTable({
             <th>Désignation</th>
             <th>Prix achat</th>
             <th>Prix vente</th>
+            <th>Coef ×</th>
             <th>MOQ</th>
             <th>Stock</th>
             <th>Image</th>
@@ -447,6 +448,22 @@ function ProductTable({
               </td>
               <td>{p.prixRevendeur != null ? `${p.prixRevendeur} €` : "—"}</td>
               <td>{p.prixPublic != null ? `${p.prixPublic} €` : "—"}</td>
+              <td>
+                {p.prixRevendeur && p.prixPublic && p.prixRevendeur > 0 ? (
+                  <span style={{
+                    display: "inline-block",
+                    padding: "2px 7px",
+                    borderRadius: 6,
+                    background: "rgba(5,150,105,0.10)",
+                    color: "#059669",
+                    fontWeight: 700,
+                    fontSize: 12,
+                    fontVariantNumeric: "tabular-nums",
+                  }}>
+                    ×{(p.prixPublic / p.prixRevendeur).toFixed(2)}
+                  </span>
+                ) : "—"}
+              </td>
               <td>{p.moq ?? "—"}</td>
               <td>{p.stock ?? "—"}</td>
               <td className={styles.tdImg}>

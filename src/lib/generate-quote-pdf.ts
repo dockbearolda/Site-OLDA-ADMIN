@@ -276,22 +276,6 @@ export function generateQuotePDF(items: CartItem[], form?: FormData, totals?: To
     y += 10;
   }
 
-  // ── Notice ──────────────────────────────────────────────────
-  y += 8;
-  doc.setFontSize(8);
-  doc.setFont("helvetica", "normal");
-  doc.setTextColor(110, 110, 115);
-  doc.text(
-    "Aucun paiement en ligne — règlement sur place lors du retrait.",
-    margin,
-    y,
-  );
-  doc.text(
-    "Cette commande sera confirmée par email par notre équipe.",
-    margin,
-    y + 5,
-  );
-
   // ── Page footer ─────────────────────────────────────────────
   doc.setFontSize(7);
   doc.setTextColor(180, 180, 185);

@@ -2,18 +2,29 @@
 .addBlock {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-/* ── Stepper quantité (avant ajout) ── */
+/* ── Slider de quantité (desktop) ── */
+.sliderWrap {
+  display: block;
+}
+
+/* ── Stepper quantité fallback (mobile étroit) ── */
 .pendingRow {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   width: 100%;
   border: 1px solid rgba(15, 17, 19, 0.14);
   border-radius: 12px;
   overflow: hidden;
+}
+
+/* Sur très petits écrans : masquer le slider, montrer les boutons */
+@media (max-width: 360px) {
+  .sliderWrap { display: none; }
+  .pendingRow  { display: flex; }
 }
 
 /* ── Bouton Ajouter ── */

@@ -195,6 +195,8 @@ const ProductCard = memo(function ProductCard({ item, siblingColors, onQuickView
           productLabel={item.label}
           productPrixAchat={parsePrice(item.resellerPrice)}
           productPrixRevente={parsePrice(item.retailPrice)}
+          moq={item.moq ?? 1}
+          step={item.step}
         />
       </div>
     </article>
@@ -252,6 +254,8 @@ const ProductListRow = memo(function ProductListRow({ item, onQuickView }: CardP
           productLabel={item.label}
           productPrixAchat={achat}
           productPrixRevente={revente}
+          moq={item.moq ?? 1}
+          step={item.step}
         />
       </div>
     </div>
