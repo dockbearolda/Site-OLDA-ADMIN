@@ -145,6 +145,17 @@ main {
   }
 }
 
+/* ── Verrouillage horizontal mobile — jamais de scroll gauche/droite ── */
+/* overflow-x: clip (pas hidden) pour ne pas créer de scroll container
+   imbriqué qui casserait position:sticky sur les éléments enfants */
+@media (max-width: 979px) {
+  html,
+  body {
+    overflow-x: clip;
+    max-width: 100vw;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

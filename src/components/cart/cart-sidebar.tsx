@@ -11,6 +11,7 @@ import { useToast } from "@/lib/toast-context";
 import { generateQuotePDF } from "@/lib/generate-quote-pdf";
 import { getProductImagePath } from "@/lib/product-image";
 import { CartProgressBar } from "./cart-progress-bar";
+import { MarginDashboard } from "./margin-dashboard";
 import styles from "./cart-sidebar.module.css";
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -273,7 +274,11 @@ export function CartSidebarContent({ onValidate }: CartSidebarContentProps) {
                 <div className={styles.itemInfo}>
                   <span className={styles.itemRef}>{item.ref}</span>
                   <span className={styles.itemLabel}>{item.label}</span>
-                  {/* Prix masqués temporairement */}
+                  {item.prixAchat != null && item.prixAchat > 0 && (
+                    <span className={styles.itemSubtotal}>
+                      {fmt(item.prixAchat)}&nbsp;<span className={styles.itemSubtotalTotal}>= {fmt(item.prixAchat * item.quantity)}</span>
+                    </span>
+                  )}
                 </div>
 
                 <div className={styles.itemControls}>
@@ -316,9 +321,8 @@ export function CartSidebarContent({ onValidate }: CartSidebarContentProps) {
 
       {/* ── Footer sticky ── */}
       <div className={styles.footer}>
-        {/* Jauge Franco de Port masquée temporairement */}
-
-        {/* Tableau de marge masqué temporairement */}
+        {/* Tableau de marge */}
+        <MarginDashboard vertical />
 
         {/* CTA principal */}
         <Link

@@ -152,8 +152,18 @@
 
 .itemSubtotal {
   font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-text);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.itemSubtotalTotal {
   font-weight: 700;
   color: var(--color-muted);
+  font-size: 0.72rem;
 }
 
 /* Contrôle quantité */

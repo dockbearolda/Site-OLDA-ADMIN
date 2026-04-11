@@ -51,6 +51,50 @@
   }
 }
 
+/* ── Mobile : bouton compact en haut à droite ─────────────────── */
+@media (max-width: 979px) {
+  .button,
+  .buttonDrawer {
+    position: fixed;
+    top: 14px;
+    right: 14px;
+    bottom: auto;
+    left: auto;
+    width: auto;
+    border-radius: 100px;
+    padding: 10px 14px;
+    gap: 6px;
+    z-index: 900;
+    background: var(--color-dark);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-top: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+    transform: none !important;
+  }
+
+  .button:hover,
+  .buttonDrawer:hover {
+    transform: none !important;
+    box-shadow: 0 6px 22px rgba(0, 0, 0, 0.28);
+  }
+
+  /* Masquer le label texte sur mobile — juste icône + badge */
+  .label {
+    display: none;
+  }
+
+  .count {
+    min-width: 20px;
+    height: 20px;
+    padding: 0 5px;
+    font-size: 0.74rem;
+    font-weight: 800;
+    background: rgba(255, 255, 255, 0.18);
+    color: #fff;
+  }
+}
+
 @media print {
   .button,
   .buttonDrawer {

@@ -85,40 +85,55 @@ function extractNotes(products: readonly CatalogProduct[]): string[] {
   return Array.from(found);
 }
 
-// ── Price parsing ────────────────────────────────────────────────
+// ── Price parsing & formatting ───────────────────────────────────
 function parsePrice(price: string | undefined): number | undefined {
   if (!price) return undefined;
   const n = parseFloat(price.replace(",", ".").replace(/[^\d.]/g, ""));
   return isNaN(n) ? undefined : n;
 }
 
-// ── Stock demo (remplacer par API réelle) ────────────────────────
-/**
- * Génère un stock de démonstration déterministe par ref.
- * Brancher l'inventaire réel via product.stock ou API Strapi.
- */
-function getDemoStock(ref: string): number | undefined {
-  if (!/^TC/.test(ref)) return undefined; // actif sur les tasses pour la démo
-  let h = 5381;
-  for (let i = 0; i < ref.length; i++) h = ((h << 5) + h + ref.charCodeAt(i)) | 0;
-  return (Math.abs(h) % 560) + 25; // 25–584
+function formatPrice(val: number): string {
+  return val.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "\u00a0€";
 }
 
-function getStock(product: CatalogProduct): number | undefined {
-  return product.stock ?? getDemoStock(product.ref);
+/** Calcule le coefficient revente/achat. Retourne null si indéfini ou invalide (#DIV/0). */
+function computeCoef(achat: number | undefined, revente: number | undefined): number | null {
+  if (!achat || !revente || achat <= 0) return null;
+  const c = revente / achat;
+  return isFinite(c) && !isNaN(c) ? Math.round(c * 100) / 100 : null;
 }
 
-// ── Stock Indicator ─────────────────────────────────────────────
-function StockIndicator({ stock }: { stock?: number }) {
-  if (stock === undefined) return null;
-  if (stock > 500) {
-    return <span className={styles.stockGreen} title={`${stock} unités en stock`} aria-label="En stock" />;
-  }
-  if (stock > 100) {
-    return <span className={styles.stockMid}>~{Math.round(stock / 10) * 10} en stock</span>;
-  }
-  return <span className={styles.stockLow}>⚠ Plus que {stock} pièces</span>;
+// ── Pricing block component ──────────────────────────────────────
+function PricingBlock({ achat, revente }: { achat?: number; revente?: number }) {
+  if (!achat && !revente) return null;
+  const coef = computeCoef(achat, revente);
+  return (
+    <div className={styles.pricingBlock}>
+      <span className={styles.priceLabelSmall}>Votre prix d&rsquo;achat</span>
+      <span className={styles.priceMain}>
+        {achat ? formatPrice(achat) : revente ? formatPrice(revente) : "—"}
+      </span>
+      {(revente && achat || coef) && (
+        <div className={styles.priceSecondary}>
+          {revente && achat && (
+            <span className={styles.pricePvc}>
+              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "inline", verticalAlign: "middle", marginRight: 2 }}>
+                <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+              </svg>
+              {formatPrice(revente)} boutique
+            </span>
+          )}
+          {coef !== null && (
+            <span className={styles.priceCoef} title="Coefficient revendeur">
+              {coef.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
+          )}
+        </div>
+      )}
+    </div>
+  );
 }
+
 
 // ── ProductCard (memo) ──────────────────────────────────────────
 type CardProps = {
@@ -132,7 +147,6 @@ const ProductCard = memo(function ProductCard({ item, siblingColors, onQuickView
   const badge = getProductBadge(item.ref);
   const glowColor = getGlowColor(item.label);
   const is350ml = item.note2 === "350 ml";
-  const stock = getStock(item);
 
   return (
     <article className={styles.itemCard}>
@@ -171,11 +185,10 @@ const ProductCard = memo(function ProductCard({ item, siblingColors, onQuickView
         </div>
         <h2 className={styles.itemName}>{item.label}</h2>
 
-        {stock !== undefined && (
-          <div className={styles.stockWrap}>
-            <StockIndicator stock={stock} />
-          </div>
-        )}
+        <PricingBlock
+          achat={parsePrice(item.resellerPrice)}
+          revente={parsePrice(item.retailPrice)}
+        />
 
         <AddToCartButton
           productRef={item.ref}
@@ -191,7 +204,9 @@ const ProductCard = memo(function ProductCard({ item, siblingColors, onQuickView
 // ── ProductListRow ──────────────────────────────────────────────
 const ProductListRow = memo(function ProductListRow({ item, onQuickView }: CardProps) {
   const src = getProductImagePath(item.ref);
-  const stock = getStock(item);
+  const achat = parsePrice(item.resellerPrice);
+  const revente = parsePrice(item.retailPrice);
+  const coef = computeCoef(achat, revente);
 
   return (
     <div className={styles.listRow}>
@@ -205,7 +220,7 @@ const ProductListRow = memo(function ProductListRow({ item, onQuickView }: CardP
         {src ? (
           <Image src={src} alt="" fill sizes="48px" className={styles.listThumbImg} />
         ) : (
-          <div className={styles.listThumbPlaceholder} />
+          <PremiumPlaceholder />
         )}
       </button>
 
@@ -215,31 +230,65 @@ const ProductListRow = memo(function ProductListRow({ item, onQuickView }: CardP
       {/* Label */}
       <span className={styles.listLabel}>{item.label}</span>
 
-      {/* Stock */}
-      <div className={styles.listStock}>
-        <StockIndicator stock={stock} />
-      </div>
+      {/* Pricing (desktop: dedicated column; mobile: inline under label) */}
+      {(achat || revente) && (
+        <div className={styles.listPricing}>
+          {achat && <span className={styles.listPriceMain}>{formatPrice(achat)}</span>}
+          {revente && achat && (
+            <span className={styles.listPricePvc}>→&nbsp;{formatPrice(revente)}</span>
+          )}
+          {coef !== null && (
+            <span className={styles.listPriceCoef} title="Coefficient revendeur">
+              {coef.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
+          )}
+        </div>
+      )}
 
       {/* Add to cart (compact) */}
       <div className={styles.listActions}>
         <AddToCartButton
           productRef={item.ref}
           productLabel={item.label}
-          productPrixAchat={parsePrice(item.resellerPrice)}
-          productPrixRevente={parsePrice(item.retailPrice)}
+          productPrixAchat={achat}
+          productPrixRevente={revente}
         />
       </div>
     </div>
   );
 });
 
+// ── View mode icons ─────────────────────────────────────────────
+function GridIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <rect x="1" y="1" width="6" height="6" rx="1" />
+      <rect x="9" y="1" width="6" height="6" rx="1" />
+      <rect x="1" y="9" width="6" height="6" rx="1" />
+      <rect x="9" y="9" width="6" height="6" rx="1" />
+    </svg>
+  );
+}
+
+function ListIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+      <line x1="1" y1="4" x2="15" y2="4" />
+      <line x1="1" y1="8" x2="15" y2="8" />
+      <line x1="1" y1="12" x2="15" y2="12" />
+    </svg>
+  );
+}
+
 // ── Component ───────────────────────────────────────────────────
 type Props = {
   products: readonly CatalogProduct[];
   viewMode?: "grid" | "list";
+  onViewModeChange?: (mode: "grid" | "list") => void;
+  title?: string;
 };
 
-export function ProductGrid({ products, viewMode = "grid" }: Props) {
+export function ProductGrid({ products, viewMode = "grid", onViewModeChange, title }: Props) {
   const [searchQuery, setSearchQuery] = useState("");
   const [activeColors, setActiveColors] = useState<Set<string>>(new Set());
   const [activeNotes, setActiveNotes] = useState<Set<string>>(new Set());
@@ -310,129 +359,163 @@ export function ProductGrid({ products, viewMode = "grid" }: Props) {
   const totalActiveFilters = activeCount + (searchQuery.trim() ? 1 : 0);
 
   return (
-    <>
-      {/* ── Omni-Search ── */}
-      <div className={styles.searchBar}>
-        <svg className={styles.searchIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <circle cx="11" cy="11" r="8" />
-          <line x1="21" y1="21" x2="16.65" y2="16.65" />
-        </svg>
-        <input
-          ref={searchRef}
-          className={styles.searchInput}
-          type="search"
-          placeholder="Chercher une référence ou une couleur…"
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          aria-label="Rechercher un produit"
-        />
-        {searchQuery && (
-          <button
-            className={styles.searchClear}
-            onClick={() => { setSearchQuery(""); searchRef.current?.focus(); }}
-            aria-label="Effacer la recherche"
-          >
-            ×
-          </button>
+    <div className={styles.wrapper}>
+      {/* ── Header sticky : titre + recherche + filtres ── */}
+      <div className={styles.stickyHeader}>
+        {/* Titre + toggle vue */}
+        {title && (
+          <div className={styles.titleRow}>
+            <h1 className={styles.title}>{title}</h1>
+            {onViewModeChange && (
+              <div className={styles.viewToggle} role="group" aria-label="Mode d'affichage">
+                <button
+                  className={`${styles.viewBtn} ${viewMode === "grid" ? styles.viewBtnActive : ""}`}
+                  onClick={() => onViewModeChange("grid")}
+                  aria-label="Vue grille"
+                  aria-pressed={viewMode === "grid"}
+                  title="Vue grille"
+                >
+                  <GridIcon />
+                </button>
+                <button
+                  className={`${styles.viewBtn} ${viewMode === "list" ? styles.viewBtnActive : ""}`}
+                  onClick={() => onViewModeChange("list")}
+                  aria-label="Vue liste"
+                  aria-pressed={viewMode === "list"}
+                  title="Vue liste dense"
+                >
+                  <ListIcon />
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Omni-Search */}
+        <div className={styles.searchBar}>
+          <svg className={styles.searchIcon} width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="8" />
+            <line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+          <input
+            ref={searchRef}
+            className={styles.searchInput}
+            type="search"
+            placeholder="Chercher une référence ou une couleur…"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            aria-label="Rechercher un produit"
+          />
+          {searchQuery && (
+            <button
+              className={styles.searchClear}
+              onClick={() => { setSearchQuery(""); searchRef.current?.focus(); }}
+              aria-label="Effacer la recherche"
+            >
+              ×
+            </button>
+          )}
+        </div>
+
+        {/* Filtres */}
+        {hasFilters && (
+          <div className={styles.filterBar}>
+            {availableColors.length > 0 && (
+              <div className={styles.swatches}>
+                {availableColors.map((color) => (
+                  <button
+                    key={color}
+                    className={`${styles.swatch} ${activeColors.has(color) ? styles.swatchActive : ""}`}
+                    style={{ "--swatch-color": COLOR_MAP[color] } as React.CSSProperties}
+                    onClick={() => toggleColor(color)}
+                    aria-label={color.charAt(0).toUpperCase() + color.slice(1)}
+                    aria-pressed={activeColors.has(color)}
+                    title={color.charAt(0).toUpperCase() + color.slice(1)}
+                  />
+                ))}
+              </div>
+            )}
+
+            {availableNotes.length > 0 && (
+              <div className={styles.pills}>
+                {availableNotes.map((note) => (
+                  <button
+                    key={note}
+                    className={`${styles.pill} ${activeNotes.has(note) ? styles.pillActive : ""}`}
+                    onClick={() => toggleNote(note)}
+                    aria-pressed={activeNotes.has(note)}
+                  >
+                    {note}
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {activeCount > 0 && (
+              <button className={styles.clearBtn} onClick={clearAll}>
+                Effacer ({activeCount})
+              </button>
+            )}
+          </div>
         )}
       </div>
 
-      {/* ── Filtres ── */}
-      {hasFilters && (
-        <div className={styles.filterBar}>
-          {availableColors.length > 0 && (
-            <div className={styles.swatches}>
-              {availableColors.map((color) => (
-                <button
-                  key={color}
-                  className={`${styles.swatch} ${activeColors.has(color) ? styles.swatchActive : ""}`}
-                  style={{ "--swatch-color": COLOR_MAP[color] } as React.CSSProperties}
-                  onClick={() => toggleColor(color)}
-                  aria-label={color.charAt(0).toUpperCase() + color.slice(1)}
-                  aria-pressed={activeColors.has(color)}
-                  title={color.charAt(0).toUpperCase() + color.slice(1)}
+      <div className={styles.gridContent}>
+        {/* ── Résultats ── */}
+        {totalActiveFilters > 0 && (
+          <p className={styles.filterCount}>
+            {filteredProducts.length} résultat{filteredProducts.length !== 1 ? "s" : ""}
+            {totalActiveFilters > 0 && (
+              <button className={styles.clearAllLink} onClick={clearAll}>
+                Tout effacer
+              </button>
+            )}
+          </p>
+        )}
+
+        {/* ── Vue Grille ── */}
+        {viewMode === "grid" && (
+          <div className={styles.itemGrid}>
+            {filteredProducts.map((item) => {
+              const prefix = seriesPrefix(item.ref);
+              const siblingColors = seriesSwatchMap.get(prefix) ?? [];
+              return (
+                <ProductCard
+                  key={item.ref}
+                  item={item}
+                  siblingColors={siblingColors}
+                  onQuickView={setQuickViewProduct}
                 />
-              ))}
-            </div>
-          )}
-
-          {availableNotes.length > 0 && (
-            <div className={styles.pills}>
-              {availableNotes.map((note) => (
-                <button
-                  key={note}
-                  className={`${styles.pill} ${activeNotes.has(note) ? styles.pillActive : ""}`}
-                  onClick={() => toggleNote(note)}
-                  aria-pressed={activeNotes.has(note)}
-                >
-                  {note}
-                </button>
-              ))}
-            </div>
-          )}
-
-          {activeCount > 0 && (
-            <button className={styles.clearBtn} onClick={clearAll}>
-              Effacer ({activeCount})
-            </button>
-          )}
-        </div>
-      )}
-
-      {/* ── Résultats ── */}
-      {totalActiveFilters > 0 && (
-        <p className={styles.filterCount}>
-          {filteredProducts.length} résultat{filteredProducts.length !== 1 ? "s" : ""}
-          {totalActiveFilters > 0 && (
-            <button className={styles.clearAllLink} onClick={clearAll}>
-              Tout effacer
-            </button>
-          )}
-        </p>
-      )}
-
-      {/* ── Vue Grille ── */}
-      {viewMode === "grid" && (
-        <div className={styles.itemGrid}>
-          {filteredProducts.map((item) => {
-            const prefix = seriesPrefix(item.ref);
-            const siblingColors = seriesSwatchMap.get(prefix) ?? [];
-            return (
-              <ProductCard
-                key={item.ref}
-                item={item}
-                siblingColors={siblingColors}
-                onQuickView={setQuickViewProduct}
-              />
-            );
-          })}
-        </div>
-      )}
-
-      {/* ── Vue Liste ── */}
-      {viewMode === "list" && (
-        <div className={styles.listView}>
-          <div className={styles.listHeader}>
-            <span />
-            <span>Réf.</span>
-            <span>Produit</span>
-            <span>Stock</span>
-            <span>Commander</span>
+              );
+            })}
           </div>
-          {filteredProducts.map((item) => {
-            const prefix = seriesPrefix(item.ref);
-            const siblingColors = seriesSwatchMap.get(prefix) ?? [];
-            return (
-              <ProductListRow
-                key={item.ref}
-                item={item}
-                siblingColors={siblingColors}
-                onQuickView={setQuickViewProduct}
-              />
-            );
-          })}
-        </div>
-      )}
+        )}
+
+        {/* ── Vue Liste ── */}
+        {viewMode === "list" && (
+          <div className={styles.listView}>
+            <div className={styles.listHeader}>
+              <span />
+              <span>Réf.</span>
+              <span>Produit</span>
+              <span>Prix achat</span>
+              <span>Commander</span>
+            </div>
+            {filteredProducts.map((item) => {
+              const prefix = seriesPrefix(item.ref);
+              const siblingColors = seriesSwatchMap.get(prefix) ?? [];
+              return (
+                <ProductListRow
+                  key={item.ref}
+                  item={item}
+                  siblingColors={siblingColors}
+                  onQuickView={setQuickViewProduct}
+                />
+              );
+            })}
+          </div>
+        )}
+      </div>
 
       {/* ── Quick view modal ── */}
       {quickViewProduct && (
@@ -441,6 +524,6 @@ export function ProductGrid({ products, viewMode = "grid" }: Props) {
           onClose={handleCloseModal}
         />
       )}
-    </>
+    </div>
   );
 }

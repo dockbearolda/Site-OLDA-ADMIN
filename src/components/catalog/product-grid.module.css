@@ -1,3 +1,95 @@
+/* ── Wrapper principal ──────────────────────────────────────── */
+
+.wrapper {
+  /* Conteneur neutre — ProductGrid s'occupe de son propre layout */
+}
+
+/* ── Header sticky : titre + recherche + filtres ──────────── */
+
+.stickyHeader {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  /* Apple glassmorphism */
+  background: rgba(245, 245, 247, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  /* S'étend sur toute la largeur de .centerCol en annulant
+     le padding de .content via les marges négatives */
+  margin: 0 0 0 0;
+  padding: 24px 28px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* ── Titre + toggle ─────────────────────────────────────────── */
+
+.titleRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
+
+.title {
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  font-weight: 800;
+  margin: 0;
+}
+
+.viewToggle {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+  margin-bottom: 2px;
+}
+
+.viewBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border: 1px solid rgba(15, 17, 19, 0.10);
+  border-radius: 9px;
+  background: transparent;
+  color: var(--color-muted);
+  cursor: pointer;
+  transition: background 140ms ease, color 140ms ease, border-color 140ms ease;
+}
+
+.viewBtn:hover {
+  background: rgba(15, 17, 19, 0.05);
+  color: var(--color-text);
+}
+
+.viewBtnActive {
+  background: var(--color-dark);
+  color: #fff;
+  border-color: transparent;
+}
+
+.viewBtnActive:hover {
+  background: #2a2d31;
+}
+
+/* ── Contenu sous le header sticky ─────────────────────────── */
+
+.gridContent {
+  padding: 20px 28px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  /* Espace de séparation visuel après le header sticky */
+  margin-top: 0;
+}
+
 /* ── Omni-Search ─────────────────────────────────────────────── */
 
 .searchBar {
@@ -180,35 +272,6 @@
   color: #c0392b;
 }
 
-/* ── Stock indicators ──────────────────────────────────────── */
-
-.stockWrap {
-  min-height: 18px;
-}
-
-.stockGreen {
-  display: inline-block;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #22c55e;
-  box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.18);
-  vertical-align: middle;
-}
-
-.stockMid {
-  font-size: 0.72rem;
-  font-weight: 500;
-  color: var(--color-muted);
-  font-variant-numeric: tabular-nums;
-}
-
-.stockLow {
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: #c2410c;
-  font-variant-numeric: tabular-nums;
-}
 
 /* ── Vue Liste ──────────────────────────────────────────────── */
 
@@ -223,7 +286,7 @@
 
 .listHeader {
   display: grid;
-  grid-template-columns: 48px 90px 1fr 130px auto;
+  grid-template-columns: 48px 90px 1fr 140px auto;
   align-items: center;
   gap: 16px;
   padding: 8px 16px;
@@ -238,7 +301,7 @@
 
 .listRow {
   display: grid;
-  grid-template-columns: 48px 90px 1fr 130px auto;
+  grid-template-columns: 48px 90px 1fr 140px auto;
   align-items: center;
   gap: 16px;
   padding: 10px 16px;
@@ -298,16 +361,50 @@
   text-overflow: ellipsis;
 }
 
-.listStock {
-  display: flex;
-  align-items: center;
-  min-width: 0;
-}
 
 .listActions {
   display: flex;
   align-items: center;
   flex-shrink: 0;
+}
+
+/* Pricing dans la vue liste (desktop) */
+.listPricing {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.listPriceMain {
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.listPricePvc {
+  font-size: 0.74rem;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.listPriceCoef {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 100px;
+  background: rgba(0, 113, 227, 0.09);
+  border: 1px solid rgba(0, 113, 227, 0.16);
+  color: var(--color-accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 /* ── Grid ───────────────────────────────────────────────────── */
@@ -480,6 +577,65 @@
   line-height: 1.4;
 }
 
+/* ── Pricing block ──────────────────────────────────────────── */
+
+.pricingBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 10px 12px;
+  background: var(--color-surface-strong, #f5f5f7);
+  border-radius: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.priceLabelSmall {
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--color-muted);
+  opacity: 0.75;
+  line-height: 1;
+}
+
+.priceMain {
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
+  font-variant-numeric: tabular-nums;
+  line-height: 1.1;
+}
+
+.priceSecondary {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-wrap: wrap;
+  margin-top: 1px;
+}
+
+.pricePvc {
+  font-size: 0.72rem;
+  color: var(--color-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.priceCoef {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 100px;
+  background: rgba(0, 113, 227, 0.09);
+  border: 1px solid rgba(0, 113, 227, 0.16);
+  color: var(--color-accent);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  font-variant-numeric: tabular-nums;
+}
+
 /* ── Responsive ─────────────────────────────────────────────── */
 
 @media (max-width: 1080px) {
@@ -489,15 +645,7 @@
 
   .listHeader,
   .listRow {
-    grid-template-columns: 48px 80px 1fr auto;
-  }
-
-  .listStock {
-    display: none;
-  }
-
-  .listHeader > :nth-child(4) {
-    display: none;
+    grid-template-columns: 48px 80px 1fr 120px auto;
   }
 }
 
@@ -510,9 +658,10 @@
     gap: 10px;
   }
 
+  /* Desktop liste très étroit : masquer ref + stock */
   .listHeader,
   .listRow {
-    grid-template-columns: 48px 1fr auto;
+    grid-template-columns: 48px 1fr 120px auto;
   }
 
   .listRef {
@@ -521,5 +670,259 @@
 
   .listHeader > :nth-child(2) {
     display: none;
+  }
+
+  .stickyHeader {
+    padding: 20px 16px 14px;
+  }
+
+  .gridContent {
+    padding: 16px 16px 0;
+  }
+
+  .title {
+    font-size: clamp(1.7rem, 6.5vw, 2.1rem);
+    color: #111111;
+  }
+}
+
+/* ── Mobile : désactiver le sticky (conflit avec sidebar header) ── */
+
+@media (max-width: 979px) {
+  .stickyHeader {
+    position: static;
+    background: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-bottom: none;
+    padding: 20px 16px 0;
+    gap: 14px;
+  }
+
+  .viewToggle {
+    display: none;
+  }
+
+  .gridContent {
+    padding: 16px 16px 0;
+    gap: 14px;
+  }
+}
+
+/* ── iOS-style list view (mobile) ───────────────────────────── */
+
+@media (max-width: 979px) {
+  /* ── Fallback CSS : force le grid en liste avant hydratation React ── */
+  /* Dès que useEffect fire, React switch sur .listView et ces styles    */
+  /* n'ont plus d'effet. Aucun impact sur le desktop.                    */
+  .itemGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .itemCard {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 14px;
+    padding: 11px 16px;
+    border-radius: 0;
+    border: none;
+    border-bottom: 1px solid #E5E5EA;
+    background: #fff;
+    box-shadow: none;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .itemCard:last-child {
+    border-bottom: none;
+  }
+
+  .itemCard:hover {
+    transform: none;
+    box-shadow: none;
+    border-color: #E5E5EA;
+  }
+
+  .imageWrap {
+    width: 60px;
+    height: 60px;
+    min-width: 60px;
+    flex-shrink: 0;
+    border-radius: 10px;
+    background: #F2F2F7;
+    aspect-ratio: unset;
+  }
+
+  .itemContent {
+    flex: 1;
+    min-width: 0;
+    gap: 4px;
+  }
+
+  .itemName {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #111;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .itemRef {
+    font-size: 0.72rem;
+    color: #8E8E93;
+  }
+
+  /* Masquer les éléments non pertinents en vue liste compacte */
+  .metaTags,
+  .cardSwatches,
+  .quickViewBtn {
+    display: none;
+  }
+
+  /* Pricing compact en vue liste mobile */
+  .pricingBlock {
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 5px 9px;
+    border-radius: 8px;
+  }
+
+  .priceLabelSmall {
+    display: none;
+  }
+
+  .priceMain {
+    font-size: 0.86rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .pricePvc {
+    font-size: 0.7rem;
+  }
+
+  .priceCoef {
+    font-size: 0.64rem;
+    padding: 1px 6px;
+  }
+
+  /* Le bouton add-to-cart reste mais compact */
+  .itemMeta {
+    margin-bottom: 0;
+  }
+  /* Conteneur sans carte — fond neutre */
+  .listView {
+    border: none;
+    border-radius: 16px;
+    background: #ffffff;
+    overflow: hidden;
+  }
+
+  /* Masquer l'en-tête de tableau */
+  .listHeader {
+    display: none;
+  }
+
+  /* iOS List Cell — 3 lignes : [thumb | nom] / [thumb | prix] / [thumb | add-to-cart] */
+  .listRow {
+    display: grid;
+    grid-template-columns: 60px 1fr;
+    grid-template-rows: auto auto auto;
+    column-gap: 12px;
+    row-gap: 4px;
+    padding: 12px 16px;
+    border-bottom: none;
+    position: relative;
+    align-items: start;
+  }
+
+  /* Séparateur indenté — signature iOS */
+  .listRow::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 88px; /* 16px padding + 60px thumb + 12px gap */
+    right: 0;
+    height: 1px;
+    background: #E5E5EA;
+  }
+
+  .listRow:last-child::after {
+    display: none;
+  }
+
+  /* Thumbnail — couvre les 3 lignes de la grille */
+  .listThumb {
+    grid-column: 1;
+    grid-row: 1 / 4;
+    width: 60px;
+    height: 60px;
+    background: #F2F2F7;
+    border-radius: 10px;
+    align-self: center;
+    overflow: hidden; /* clip le PremiumPlaceholder à 60×60 */
+  }
+
+  /* Réduire le logo filigrane du placeholder dans la miniature */
+  .listThumb :global([class*="logo"]) {
+    width: 22px;
+    height: 22px;
+  }
+
+  /* Masquer le label texte "Visuel en préparation" — trop long pour 60px */
+  .listThumb :global([class*="label"]) {
+    display: none;
+  }
+
+  /* Nom produit — ligne 1, col 2 */
+  .listLabel {
+    grid-column: 2;
+    grid-row: 1;
+    color: #111111;
+    font-size: 0.88rem;
+    font-weight: 600;
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    align-self: end;
+  }
+
+  /* Pricing — ligne 2, col 2 */
+  .listPricing {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    flex-wrap: nowrap;
+  }
+
+  /* Bouton add-to-cart — ligne 3, col 2 */
+  .listActions {
+    grid-column: 2;
+    grid-row: 3;
+    align-self: start;
+  }
+
+  /* Masquer ref sur mobile */
+  .listRef {
+    display: none;
+  }
+
+  /* Barre de recherche style iOS */
+  .searchInput {
+    background: rgba(118, 118, 128, 0.12);
+    border-color: transparent;
+    border-radius: 10px;
+  }
+
+  .searchInput:focus {
+    background: rgba(118, 118, 128, 0.15);
+    border-color: transparent;
+    box-shadow: none;
   }
 }

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Manrope } from "next/font/google";
 
 import { CartButton } from "@/components/cart/cart-button";
@@ -20,6 +20,14 @@ const manrope = Manrope({
   variable: "--font-sans",
   display: "swap",
 });
+
+/* Viewport-fit=cover : indispensable pour que env(safe-area-inset-top)
+   retourne la vraie valeur de l'encoche/Dynamic Island sur iPhone */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: {

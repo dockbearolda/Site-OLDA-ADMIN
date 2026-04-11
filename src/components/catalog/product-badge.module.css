@@ -15,6 +15,18 @@
   pointer-events: none;
 }
 
+/* ── Miniature mobile — badge micro pour ne jamais couvrir l'image ── */
+@media (max-width: 979px) {
+  .badge {
+    top: 0;
+    left: 0;
+    padding: 2px 4px;
+    font-size: 8px;
+    border-radius: 4px;
+    letter-spacing: 0.06em;
+  }
+}
+
 .bestSeller {
   background: #b8892a;
   color: #fff;

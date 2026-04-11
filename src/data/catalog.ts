@@ -130,10 +130,10 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       {
         name: "Porte-Clés",
         products: [
-          product("PCP 01", "Porte-Clés Plexiglass"),
-          product("PCB 01", "Porte-Clés Bois"),
-          product("PCA 01", "Porte-Clés Acrylique"),
-          product("PCFL 01", "Porte-Clés Flotteur Liège"),
+          product("PCP 01", "Porte-Clés Plexiglass", { moq: 10, resellerPrice: "2.50", retailPrice: "5.00" }),
+          product("PCB 01", "Porte-Clés Bois", { moq: 10, resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("PCA 01", "Porte-Clés Acrylique", { moq: 10, resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("PCFL 01", "Porte-Clés Flotteur Liège", { moq: 3, resellerPrice: "7.00", retailPrice: "14.00" }),
         ],
       },
       {

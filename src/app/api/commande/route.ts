@@ -487,6 +487,8 @@ export async function POST(request: Request) {
 
   /* — Envoi — */
   try {
+    console.log(`[commande] Tentative envoi — ref: ${ref}, smtp: ${process.env.SMTP_HOST ?? "smtp.gmail.com"}:${process.env.SMTP_PORT ?? 587}, user: ${process.env.SMTP_USER ?? "(non défini)"}`);
+
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST || "smtp.gmail.com",
       port: Number(process.env.SMTP_PORT) || 587,
@@ -495,6 +497,9 @@ export async function POST(request: Request) {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS,
       },
+      connectionTimeout: 10_000,
+      greetingTimeout: 10_000,
+      socketTimeout: 15_000,
     });
 
     const pdfAttachment = pdfBuffer
@@ -523,11 +528,12 @@ export async function POST(request: Request) {
       }),
     ]);
 
+    console.log(`[commande] ✅ Emails envoyés avec succès — ref: ${ref}`);
     return NextResponse.json({ ok: true, ref });
   } catch (error) {
-    console.error("Erreur envoi commande:", error);
+    console.error("[commande] ❌ Erreur envoi email:", error);
     return NextResponse.json(
-      { error: "Erreur serveur. Veuillez réessayer." },
+      { error: "Erreur lors de l'envoi. Veuillez réessayer." },
       { status: 500 },
     );
   }

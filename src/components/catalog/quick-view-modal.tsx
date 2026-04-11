@@ -9,6 +9,23 @@ import { getProductImagePath } from "@/lib/product-image";
 
 import styles from "./quick-view-modal.module.css";
 
+// ── Price helpers ────────────────────────────────────────────────
+function parsePrice(price: string | undefined): number | undefined {
+  if (!price) return undefined;
+  const n = parseFloat(price.replace(",", ".").replace(/[^\d.]/g, ""));
+  return isNaN(n) ? undefined : n;
+}
+
+function formatPrice(val: number): string {
+  return val.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "\u00a0€";
+}
+
+function computeCoef(achat: number | undefined, revente: number | undefined): number | null {
+  if (!achat || !revente || achat <= 0) return null;
+  const c = revente / achat;
+  return isFinite(c) && !isNaN(c) ? Math.round(c * 100) / 100 : null;
+}
+
 type Props = {
   product: CatalogProduct;
   onClose: () => void;
@@ -16,6 +33,9 @@ type Props = {
 
 export function QuickViewModal({ product, onClose }: Props) {
   const src = getProductImagePath(product.ref);
+  const prixAchat = parsePrice(product.resellerPrice);
+  const prixRevente = parsePrice(product.retailPrice);
+  const coef = computeCoef(prixAchat, prixRevente);
   const meta = [
     product.note1,
     product.note2,
@@ -79,8 +99,40 @@ export function QuickViewModal({ product, onClose }: Props) {
             </div>
           )}
 
+          {(prixAchat || prixRevente) && (
+            <div className={styles.pricingBlock}>
+              <div className={styles.pricingRow}>
+                <div className={styles.pricingMain}>
+                  <span className={styles.pricingLabel}>Votre prix d&rsquo;achat</span>
+                  <span className={styles.pricingValue}>
+                    {prixAchat ? formatPrice(prixAchat) : "—"}
+                  </span>
+                </div>
+                {coef !== null && (
+                  <span className={styles.pricingCoef} title="Coefficient revendeur">
+                    {coef.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                  </span>
+                )}
+              </div>
+              {prixRevente && prixAchat && (
+                <div className={styles.pricingRetail}>
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+                  </svg>
+                  <span>{formatPrice(prixRevente)}</span>
+                  <span className={styles.pricingRetailLabel}>Prix de vente boutique conseillé TTC</span>
+                </div>
+              )}
+            </div>
+          )}
+
           <div className={styles.actions}>
-            <AddToCartButton productRef={product.ref} productLabel={product.label} />
+            <AddToCartButton
+              productRef={product.ref}
+              productLabel={product.label}
+              productPrixAchat={prixAchat}
+              productPrixRevente={prixRevente}
+            />
           </div>
         </div>
       </div>

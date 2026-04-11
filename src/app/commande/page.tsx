@@ -126,14 +126,22 @@ export default function CommandePage() {
       // PDF optionnel — ne bloque pas la soumission
     }
 
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 35_000);
+
     try {
       const res = await fetch("/api/commande", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ ...form, items, pdfBase64 }),
+        signal: controller.signal,
       });
+      clearTimeout(timeoutId);
 
-      if (!res.ok) throw new Error("Erreur lors de l'envoi");
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({})) as { error?: string };
+        throw new Error(errData.error ?? "Erreur lors de l'envoi");
+      }
 
       const data = await res.json() as { ok: boolean; ref?: string };
       const ref = data.ref ?? `CMD-${Date.now()}`;
@@ -143,8 +151,15 @@ export default function CommandePage() {
       setSuccessRef(ref);
       clear();
       setSubmitState("success");
-    } catch {
-      setError("Une erreur est survenue. Veuillez réessayer.");
+    } catch (err) {
+      clearTimeout(timeoutId);
+      if (err instanceof Error && err.name === "AbortError") {
+        setError("Le serveur ne répond pas. Vérifiez votre connexion et réessayez.");
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Une erreur est survenue. Veuillez réessayer.");
+      }
       setSubmitState("idle");
     }
   }

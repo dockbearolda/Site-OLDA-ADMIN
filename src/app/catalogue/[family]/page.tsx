@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { headers } from "next/headers";
+import { notFound, redirect } from "next/navigation";
 
 import { MediaPlaceholder } from "@/components/ui/media-placeholder";
 import {
@@ -50,6 +51,14 @@ export default async function FamilyPage({ params }: FamilyPageProps) {
 
   if (!familyData) {
     notFound();
+  }
+
+  // Sur mobile (iPhone / Android phone), aller directement à la première sous-famille
+  const hdrs = await headers();
+  const ua = hdrs.get("user-agent") ?? "";
+  const isMobilePhone = /iPhone|Android.*Mobile|Mobile.*Android/i.test(ua);
+  if (isMobilePhone && familyData.subfamilies.length > 0) {
+    redirect(`/catalogue/${family}/${slugifyLabel(familyData.subfamilies[0].name)}`);
   }
 
   return (
