@@ -1,5 +1,5 @@
 /**
- * Seed initial — peuple la base avec le catalogue statique.
+ * Seed initial — peuple la base avec le catalogue complet fusionné.
  * Exécuter : npx prisma db seed
  * (ou automatiquement lors de la première migration sur Railway)
  */
@@ -8,74 +8,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-function parsePrice(price?: string): number | undefined {
-  if (!price) return undefined;
-  const n = parseFloat(price.replace(",", ".").replace(/[^0-9.]/g, ""));
-  return isNaN(n) ? undefined : n;
-}
-
 const catalogData = [
-  {
-    slug: "tasses",
-    nom: "Tasses",
-    strapline: "La famille la plus profonde du catalogue",
-    resume: "Déclinaisons céramique, métal et bois avec une grande variété de coloris et un standard 350 ml bien identifié.",
-    accent: "#dfead7",
-    surface: "rgba(223, 234, 215, 0.72)",
-    signauxBusiness: [
-      "Plusieurs références indiquent des designs disponibles selon le stock.",
-      "Une largeur d'offre utile pour cadeaux clients, vente additionnelle et séries récurrentes.",
-    ],
-    ordre: 0,
-    categories: [
-      {
-        nom: "Tasse Céramique FUCK",
-        slug: "tasse-ceramique-fuck",
-        ordre: 0,
-        produits: [
-          { ref: "TCF 02", label: "Tasse Orange - Blanc", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-          { ref: "TCF 03", label: "Tasse Rose - Blanc", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-          { ref: "TCF 05", label: "Tasse Bleu - Blanc", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-          { ref: "TCF 06", label: "Tasse Noir - Blanc", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-          { ref: "TCF 10", label: "Tasse Blanc - Rouge", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-          { ref: "TCF 14", label: "Tasse Noir - Jaune", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-          { ref: "TCF 15", label: "Tasse Noir - Rouge", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-        ],
-      },
-      {
-        nom: "Tasse Céramique",
-        slug: "tasse-ceramique",
-        ordre: 1,
-        produits: [
-          { ref: "TC 03", label: "Tasse Rose - Blanc", note1: "Choix de designs en fonction du stock", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-          { ref: "TC 04", label: "Tasse Bleu - Blanc", note1: "Choix de designs en fonction du stock", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-          { ref: "TC 09", label: "Tasse Blanc - Orange", note1: "Choix de designs en fonction du stock", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-          { ref: "TC 10", label: "Tasse Blanc - Rouge", note1: "Choix de designs en fonction du stock", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-          { ref: "TC 15", label: "Tasse Noir - Rouge", note1: "Choix de designs en fonction du stock", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-          { ref: "TC 16", label: "Tasse Noir - Vert", note1: "Choix de designs en fonction du stock", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.20, prixPublic: 18, enLigne: true },
-        ],
-      },
-      {
-        nom: "Tasse Métal",
-        slug: "tasse-metal",
-        ordre: 2,
-        produits: [
-          { ref: "TM 01", label: "Tasse Métal Rouge", note1: "Choix de designs en fonction du stock", note2: "?", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15, enLigne: true },
-          { ref: "TM 02", label: "Tasse Métal Blanc", note1: "Choix de designs en fonction du stock", note2: "?", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15, enLigne: true },
-          { ref: "TM 03", label: "Tasse Métal Jaune", note1: "Choix de designs en fonction du stock", note2: "?", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15, enLigne: true },
-          { ref: "TM 04", label: "Tasse Métal Bleu", note1: "Choix de designs en fonction du stock", note2: "?", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15, enLigne: true },
-        ],
-      },
-      {
-        nom: "Autres Tasses",
-        slug: "autres-tasses",
-        ordre: 3,
-        produits: [
-          { ref: "TB-01", label: "Tasse Bois", moq: 1, prixRevendeur: 15.00, prixPublic: 22, enLigne: true },
-        ],
-      },
-    ],
-  },
   {
     slug: "goodies",
     nom: "Goodies",
@@ -94,10 +27,10 @@ const catalogData = [
         slug: "porte-cles",
         ordre: 0,
         produits: [
-          { ref: "PCP 01", label: "Porte-Clés Plexiglass", note1: "Mix logo selon disponibilité", moq: 10, step: 10, prixRevendeur: 2.50, prixPublic: 5, enLigne: true },
-          { ref: "PCB 01", label: "Porte-Clés Bois", moq: 10, step: 10, prixRevendeur: 4.50, prixPublic: 9, enLigne: true },
-          { ref: "PCA 01", label: "Porte-Clés Acrylique", moq: 10, step: 10, prixRevendeur: 4.50, prixPublic: 9, enLigne: true },
-          { ref: "PCFL 01", label: "Porte-Clés Flotteur Liège", moq: 2, step: 4, prixRevendeur: 7, prixPublic: 14, enLigne: true },
+          { ref: "PCP 01", label: "Porte-Clés Plexiglass", moq: 10, step: 10, prixRevendeur: 2.5, prixPublic: 5, note1: "Mix logo selon disponibilité" },
+          { ref: "PCB 01", label: "Porte-Clés Bois", moq: 10, step: 10, prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "PCA 01", label: "Porte-Clés Acrylique", moq: 10, step: 10, prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "PCFL 01", label: "Porte-Clés Flotteur Liège", moq: 2, step: 4, prixRevendeur: 7, prixPublic: 14 },
         ],
       },
       {
@@ -105,9 +38,75 @@ const catalogData = [
         slug: "magnets",
         ordre: 1,
         produits: [
-          { ref: "VP 01", label: "Magnet Plexiglass", moq: 10, step: 10, prixRevendeur: 2.50, prixPublic: 5, enLigne: true },
-          { ref: "MB 01", label: "Magnet Bois", moq: 10, step: 10, prixRevendeur: 4.50, prixPublic: 9, enLigne: true },
+          { ref: "MP 01", label: "Magnet Plexiglass", moq: 10, step: 10, prixRevendeur: 2.5, prixPublic: 5 },
+          { ref: "VP 01", label: "Magnet Plexiglass", moq: 10, step: 10, prixRevendeur: 2.5, prixPublic: 5 },
+          { ref: "MB 01", label: "Magnet Bois", moq: 10, step: 10, prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "MA 01", label: "Magnet Acrylique", moq: 10, step: 10, prixRevendeur: 4.5, prixPublic: 9 },
         ],
+      },
+      {
+        nom: "Sticker",
+        slug: "sticker",
+        ordre: 2,
+        produits: [{ ref: "STI 01", label: "Sticker", note2: "75 x 75", moq: 10, step: 10, prixRevendeur: 1, prixPublic: 2 }],
+      },
+    ],
+  },
+  {
+    slug: "tasses",
+    nom: "Tasses",
+    strapline: "La famille la plus profonde du catalogue",
+    resume: "Déclinaisons céramique, métal et bois avec une grande variété de coloris et un standard 350 ml bien identifié.",
+    accent: "#dfead7",
+    surface: "rgba(223, 234, 215, 0.72)",
+    signauxBusiness: [
+      "Plusieurs références indiquent des designs disponibles selon le stock.",
+      "Une largeur d'offre utile pour cadeaux clients, vente additionnelle et séries récurrentes.",
+    ],
+    ordre: 0,
+    categories: [
+      {
+        nom: "Tasse Céramique FUCK",
+        slug: "tasse-ceramique-fuck",
+        ordre: 0,
+        produits: [
+          ["TCF 01","Tasse Rouge - Blanc"],["TCF 02","Tasse Orange - Blanc"],["TCF 03","Tasse Rose - Blanc"],
+          ["TCF 04","Tasse Bleu - Blanc"],["TCF 05","Tasse Vert - Blanc"],["TCF 06","Tasse Noir - Blanc"],
+          ["TCF 07","Tasse Blanc - Bleu"],["TCF 08","Tasse Blanc - Jaune"],["TCF 09","Tasse Blanc - Orange"],
+          ["TCF 10","Tasse Blanc - Rouge"],["TCF 11","Tasse Blanc - Vert"],["TCF 12","Tasse Blanc - Noir"],
+          ["TCF 13","Tasse Noir - Rose"],["TCF 14","Tasse Noir - Jaune"],["TCF 15","Tasse Noir - Rouge"],
+          ["TCF 16","Tasse Noir - Vert"],["TCF 17","Tasse Noir - Orange"],
+        ].map(([ref, label]) => ({ ref, label, note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.2, prixPublic: 18 })),
+      },
+      {
+        nom: "Tasse Céramique",
+        slug: "tasse-ceramique",
+        ordre: 1,
+        produits: [
+          ["TC 01","Tasse Rouge - Blanc"],["TC 02","Tasse Orange - Blanc"],["TC 03","Tasse Rose - Blanc"],
+          ["TC 04","Tasse Bleu - Blanc"],["TC 05","Tasse Vert - Blanc"],["TC 06","Tasse Noir - Blanc"],
+          ["TC 07","Tasse Blanc - Bleu"],["TC 08","Tasse Blanc - Jaune"],["TC 09","Tasse Blanc - Orange"],
+          ["TC 10","Tasse Blanc - Rouge"],["TC 11","Tasse Blanc - Vert"],["TC 12","Tasse Blanc - Noir"],
+          ["TC 13","Tasse Noir - Rose"],["TC 14","Tasse Noir - Jaune"],["TC 15","Tasse Noir - Rouge"],
+          ["TC 16","Tasse Noir - Vert"],["TC 17","Tasse Noir - Orange"],
+        ].map(([ref, label]) => ({ ref, label, note1: "Choix de designs en fonction du stock", note2: "350 ml", moq: 3, step: 3, prixRevendeur: 10.2, prixPublic: 18 })),
+      },
+      {
+        nom: "Tasse Métal",
+        slug: "tasse-metal",
+        ordre: 2,
+        produits: [
+          { ref: "TM 01", label: "Tasse Métal Rouge", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15 },
+          { ref: "TM 02", label: "Tasse Métal Blanc", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15 },
+          { ref: "TM 03", label: "Tasse Métal Jaune", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15 },
+          { ref: "TM 04", label: "Tasse Métal Bleu", moq: 3, step: 3, prixRevendeur: 9, prixPublic: 15 },
+        ],
+      },
+      {
+        nom: "Autres Tasses",
+        slug: "autres-tasses",
+        ordre: 3,
+        produits: [{ ref: "TB-01", label: "Tasse Bois", moq: 1, step: 1, prixRevendeur: 15, prixPublic: 22 }],
       },
     ],
   },
@@ -129,10 +128,19 @@ const catalogData = [
         slug: "du-quotidien",
         ordre: 0,
         produits: [
-          { ref: "FCF 01", label: "Flasque Bois Foncé", moq: 2, step: 2, prixRevendeur: 12.00, prixPublic: 22, enLigne: true },
-          { ref: "LBF 01", label: "Limonadier Bois Foncé", moq: 4, step: 4, prixRevendeur: 6, prixPublic: 12, enLigne: true },
-          { ref: "CMB 01", label: "Couteau Multi Bois", moq: 4, step: 4, prixRevendeur: 9, prixPublic: 18, enLigne: false },
-          { ref: "CML 01", label: "Couteau Multi Liège", moq: 4, step: 4, prixRevendeur: 9, prixPublic: 18, enLigne: false },
+          { ref: "SMA 01", label: "Support Mobile Acrylique", prixRevendeur: 6, prixPublic: 12 },
+          { ref: "SMB 01", label: "Support Mobile Bois", prixRevendeur: 6, prixPublic: 12 },
+          { ref: "PS 01", label: "Porte Sac", moq: 3, prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "FBC 01", label: "Flasque Bois Clair", prixRevendeur: 12, prixPublic: 22 },
+          { ref: "FCF 01", label: "Flasque Bois Foncé", moq: 2, step: 2, prixRevendeur: 12, prixPublic: 22 },
+          { ref: "LBF 01", label: "Limonadier Bois Foncé", moq: 4, step: 4, prixRevendeur: 6, prixPublic: 12 },
+          { ref: "LBC 01", label: "Limonadier Bois Clair", prixRevendeur: 6, prixPublic: 12 },
+          { ref: "IVL 01", label: "Identificateur Valise Liège", prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "IVS 01", label: "Identificateur Valise Similicuir", prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "ML 01", label: "Petit Miroir Liège", prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "CMB 01", label: "Couteau Multi Bois", prixRevendeur: 7.5, prixPublic: 15 },
+          { ref: "CML 01", label: "Couteau Multi Liège", prixRevendeur: 7.5, prixPublic: 15 },
+          { ref: "PBA 01", label: "Pince à billet Argent", prixRevendeur: 4.5, prixPublic: 9 },
         ],
       },
       {
@@ -140,8 +148,10 @@ const catalogData = [
         slug: "art-de-la-table",
         ordre: 1,
         produits: [
-          { ref: "DVL 01", label: "Dessous de Verre Liège (par 1)", moq: 12, step: 24, prixRevendeur: 3, prixPublic: 6, enLigne: true },
-          { ref: "DVA 01", label: "Dessous de Verre Acrylique (par 1)", moq: 12, step: 24, prixRevendeur: 3, prixPublic: 6, enLigne: false },
+          { ref: "BB 01", label: "Bouchon Bois", prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "DPL 01", label: "Dessous de plat Liège", prixRevendeur: 7.5, prixPublic: 15 },
+          { ref: "DVL 01", label: "Dessous de Verre Liège (par 1)", moq: 12, step: 24, prixRevendeur: 3, prixPublic: 6 },
+          { ref: "PL 01", label: "Plateau en Liège", prixRevendeur: 12, prixPublic: 24 },
         ],
       },
       {
@@ -149,8 +159,14 @@ const catalogData = [
         slug: "papeterie",
         ordre: 2,
         produits: [
-          { ref: "BNSP", label: "Bloc Note Similicuir A6 Petit", note1: "Choix de designs en fonction du stock", moq: 4, step: 4, prixRevendeur: 7.50, prixPublic: 15, enLigne: false },
-          { ref: "BNLG", label: "Bloc Note Liège A5 Grand", note1: "Choix de designs en fonction du stock", moq: 4, step: 4, prixRevendeur: 9.50, prixPublic: 19, enLigne: false },
+          { ref: "CPB 01", label: "Crayon papier bois", moq: 10, prixRevendeur: 1, prixPublic: 2 },
+          { ref: "SBB 01", label: "Stylo à bille en bois", prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "BNLP", label: "Bloc Note Liège A6 Petit", note1: "Choix de designs en fonction du stock", prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "BNSP", label: "Bloc Note Similicuir A6 Petit", note1: "Choix de designs en fonction du stock", prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "BNLG", label: "Bloc Note Liège A5 Grand", note1: "Choix de designs en fonction du stock", prixRevendeur: 7.5, prixPublic: 15 },
+          { ref: "BNSG", label: "Bloc Note Similicuir A5 Grand", note1: "Choix de designs en fonction du stock", prixRevendeur: 7.5, prixPublic: 15 },
+          { ref: "CP 01", label: "Carte Postale A6 (105 x 148)", prixRevendeur: 1.5, prixPublic: 3 },
+          { ref: "AT 01", label: "Affiche A3 + Tube (297 x 420)", prixRevendeur: 12, prixPublic: 24 },
         ],
       },
       {
@@ -158,8 +174,12 @@ const catalogData = [
         slug: "jeux",
         ordre: 3,
         produits: [
-          { ref: "DOM 01", label: "Dominos", moq: 2, step: 4, prixRevendeur: 7.50, prixPublic: 15, enLigne: true },
-          { ref: "MIK 01", label: "Mikado", moq: 2, step: 4, prixRevendeur: 7.50, prixPublic: 15, enLigne: true },
+          { ref: "MOR 01", label: "Morpion", prixRevendeur: 7.5, prixPublic: 15 },
+          { ref: "DOM 01", label: "Dominos", moq: 2, step: 4, prixRevendeur: 7.5, prixPublic: 15 },
+          { ref: "MIK 01", label: "Mikado", moq: 2, step: 4, prixRevendeur: 7.5, prixPublic: 15 },
+          { ref: "YO 01", label: "Yoyo", prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "JDC 01", label: "Jeux de Cartes", prixRevendeur: 6, prixPublic: 12 },
+          { ref: "RB 01", label: "Raquette Bois", prixRevendeur: 9, prixPublic: 18 },
         ],
       },
     ],
@@ -182,8 +202,12 @@ const catalogData = [
         slug: "selection-speciale",
         ordre: 0,
         produits: [
-          { ref: "PML 01", label: "Porte Monnaie Liège", moq: 2, step: 2, prixRevendeur: 4.50, prixPublic: 9, enLigne: true },
-          { ref: "BBB 01", label: "Boîte à bijoux bois", moq: 2, step: 2, prixRevendeur: 4.50, prixPublic: 9, enLigne: true },
+          { ref: "PCL 01", label: "Porte Carte Liège", prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "PML 01", label: "Porte Monnaie Liège", moq: 2, step: 2, prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "BBB 01", label: "Boîte à bijoux bois", moq: 2, step: 2, prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "DB 01", label: "Décapsuleur Bois", prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "BCC 01", label: "Boîte à clic-clac", prixRevendeur: 3.5, prixPublic: 7 },
+          { ref: "CL 01", label: "Cendrier Liège", prixRevendeur: 4.5, prixPublic: 9 },
         ],
       },
     ],
@@ -206,9 +230,14 @@ const catalogData = [
         slug: "pochettes",
         ordre: 0,
         produits: [
-          { ref: "P-002", label: "Pochette EarthAware Bio S", moq: 5, step: 5, prixRevendeur: 11, prixPublic: 22, enLigne: false },
-          { ref: "P-003", label: "Pochette EarthAware Bio L", moq: 5, step: 5, prixRevendeur: 14.50, prixPublic: 29, enLigne: false },
-          { ref: "P-001", label: "Pochette Coton M", moq: 5, step: 5, prixRevendeur: 11, prixPublic: 22, enLigne: false },
+          { ref: "P-001", label: "Trousse de toilette", prixRevendeur: 9, prixPublic: 18 },
+          { ref: "P-002", label: "Pochette EarthAware Bio S", prixRevendeur: 6, prixPublic: 12 },
+          { ref: "P-003", label: "Pochette EarthAware Bio L", prixRevendeur: 9, prixPublic: 18 },
+          { ref: "P-004", label: "Pochette Zippée S", prixRevendeur: 4.5, prixPublic: 9 },
+          { ref: "P-005", label: "Pochette Zippée M", prixRevendeur: 6, prixPublic: 12 },
+          { ref: "P-006", label: "Pochette Vintage", prixRevendeur: 9, prixPublic: 18 },
+          { ref: "P-007", label: "Pochette Coton S", prixRevendeur: 3.5, prixPublic: 7 },
+          { ref: "P-008", label: "Pochette Coton M", prixRevendeur: 4.5, prixPublic: 9 },
         ],
       },
       {
@@ -216,7 +245,10 @@ const catalogData = [
         slug: "sacs",
         ordre: 1,
         produits: [
-          { ref: "S-001", label: "Sac de plage Naturel", moq: 5, step: 5, prixRevendeur: 19.50, prixPublic: 39, enLigne: false },
+          { ref: "S-001", label: "Sac de plage Naturel", prixRevendeur: 12, prixPublic: 24 },
+          { ref: "S-002", label: "Sac de plage XL", prixRevendeur: 15, prixPublic: 30 },
+          { ref: "S-003", label: "Sac Polochon en Molleton", prixRevendeur: 18, prixPublic: 36 },
+          { ref: "S-004", label: "Tote Bag en Coton BIO", prixRevendeur: 4.5, prixPublic: 9 },
         ],
       },
     ],
@@ -224,7 +256,7 @@ const catalogData = [
 ] as const;
 
 async function main() {
-  console.log("🌱 Début du seed…");
+  console.log("🌱 Début du seed complet…");
 
   for (const famille of catalogData) {
     const createdFamille = await prisma.famille.upsert({
@@ -268,7 +300,6 @@ async function main() {
           note1?: string; note2?: string;
           moq?: number; step?: number;
           prixRevendeur?: number; prixPublic?: number;
-          enLigne?: boolean;
         };
         await prisma.produit.upsert({
           where: { reference: p.ref },
@@ -280,8 +311,8 @@ async function main() {
             step: p.step ?? null,
             prixRevendeur: p.prixRevendeur ?? null,
             prixPublic: p.prixPublic ?? null,
-            enLigne: p.enLigne ?? true,
             categorieId: createdCategorie.id,
+            enLigne: true,
           },
           create: {
             reference: p.ref,
@@ -292,7 +323,7 @@ async function main() {
             step: p.step ?? null,
             prixRevendeur: p.prixRevendeur ?? null,
             prixPublic: p.prixPublic ?? null,
-            enLigne: p.enLigne ?? true,
+            enLigne: true,
             categorieId: createdCategorie.id,
           },
         });
@@ -301,7 +332,7 @@ async function main() {
     }
   }
 
-  console.log("✅ Seed terminé !");
+  console.log("✅ Seed complet terminé !");
 }
 
 main()

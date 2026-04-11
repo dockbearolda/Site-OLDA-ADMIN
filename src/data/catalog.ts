@@ -119,7 +119,8 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     name: "Goodies",
     defaultMoq: 10,
     strapline: "Formats rapides à activer",
-    summary: "Porte-clés, magnets et stickers pour opérations terrain, coffrets clients et revente boutique.",
+    summary:
+      "Porte-clés, magnets et stickers pour opérations terrain, coffrets clients et revente boutique.",
     accent: "#dbe7ff",
     surface: "rgba(219, 231, 255, 0.68)",
     businessSignals: [
@@ -139,8 +140,20 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       {
         name: "Magnets",
         products: [
-          product("VP 01", "Magnet Plexiglass", { moq: 10, step: 10, resellerPrice: "2.50", retailPrice: "5.00" }),
-          product("MB 01", "Magnet Bois", { moq: 10, step: 10, resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("MP 01", "Magnet Plexiglass", { resellerPrice: "2.50", retailPrice: "5.00" }),
+          product("VP 01", "Magnet Plexiglass", { resellerPrice: "2.50", retailPrice: "5.00" }), // Ajouté comme variante possible
+          product("MB 01", "Magnet Bois", { resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("MA 01", "Magnet Acrylique", { resellerPrice: "4.50", retailPrice: "9.00" }),
+        ],
+      },
+      {
+        name: "Sticker",
+        products: [
+          product("STI 01", "Sticker", {
+            note2: "75 x 75",
+            resellerPrice: "1.00",
+            retailPrice: "2.00",
+          }),
         ],
       },
     ],
@@ -149,7 +162,8 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     id: "tasses",
     name: "Tasses",
     strapline: "La famille la plus profonde du catalogue",
-    summary: "Déclinaisons céramique, métal et bois avec une grande variété de coloris et un standard 350 ml bien identifié.",
+    summary:
+      "Déclinaisons céramique, métal et bois avec une grande variété de coloris et un standard 350 ml bien identifié.",
     accent: "#dfead7",
     surface: "rgba(223, 234, 215, 0.72)",
     businessSignals: [
@@ -159,26 +173,24 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     subfamilies: [
       {
         name: "Tasse Céramique FUCK",
-        products: [
-          product("TCF 02", "Tasse Orange - Blanc", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-          product("TCF 03", "Tasse Rose - Blanc", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-          product("TCF 05", "Tasse Bleu - Blanc", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-          product("TCF 06", "Tasse Noir - Blanc", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-          product("TCF 10", "Tasse Blanc - Rouge", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-          product("TCF 14", "Tasse Noir - Jaune", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-          product("TCF 15", "Tasse Noir - Rouge", { note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-        ],
+        products: buildCeramicProducts("TCF", {
+          note2: mugCapacityNote,
+          moq: 3,
+          step: 3,
+          resellerPrice: "10.20",
+          retailPrice: "18.00",
+        }),
       },
       {
         name: "Tasse Céramique",
-        products: [
-          product("TC 03", "Tasse Rose - Blanc", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-          product("TC 04", "Tasse Bleu - Blanc", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-          product("TC 09", "Tasse Blanc - Orange", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-          product("TC 10", "Tasse Blanc - Rouge", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-          product("TC 15", "Tasse Noir - Rouge", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-          product("TC 16", "Tasse Noir - Vert", { note1: stockDesignNote, note2: mugCapacityNote, moq: 3, step: 3, resellerPrice: "10.20", retailPrice: "18.00" }),
-        ],
+        products: buildCeramicProducts("TC", {
+          note1: stockDesignNote,
+          note2: mugCapacityNote,
+          moq: 3,
+          step: 3,
+          resellerPrice: "10.20",
+          retailPrice: "18.00",
+        }),
       },
       {
         name: "Tasse Métal",
@@ -191,7 +203,7 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       },
       {
         name: "Autres Tasses",
-        products: [product("TB-01", "Tasse Bois", { resellerPrice: "15.00", retailPrice: "22.00", moq: 1 })],
+        products: [product("TB-01", "Tasse Bois", { resellerPrice: "15.00", retailPrice: "22.00", moq: 1, step: 1 })],
       },
     ],
   },
@@ -199,7 +211,8 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     id: "accessoires",
     name: "Accessoires",
     strapline: "Le catalogue de complément qui crédibilise l'offre",
-    summary: "Accessoires du quotidien, art de la table, papeterie et jeux pour enrichir une offre B2B sans brouiller la lecture.",
+    summary:
+      "Accessoires du quotidien, art de la table, papeterie et jeux pour enrichir une offre B2B sans brouiller la lecture.",
     accent: "#f4dc95",
     surface: "rgba(244, 220, 149, 0.72)",
     businessSignals: [
@@ -210,25 +223,72 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       {
         name: "Du quotidien",
         products: [
+          product("SMA 01", "Support Mobile Acrylique", { resellerPrice: "6.00", retailPrice: "12.00" }),
+          product("SMB 01", "Support Mobile Bois", { resellerPrice: "6.00", retailPrice: "12.00" }),
+          product("PS 01", "Porte Sac", { moq: 3, resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("FBC 01", "Flasque Bois Clair", { resellerPrice: "12.00", retailPrice: "22.00" }),
           product("FCF 01", "Flasque Bois Foncé", { resellerPrice: "12.00", retailPrice: "22.00", moq: 2, step: 2 }),
           product("LBF 01", "Limonadier Bois Foncé", { resellerPrice: "6.00", retailPrice: "12.00", moq: 4, step: 4 }),
+          product("LBC 01", "Limonadier Bois Clair", { resellerPrice: "6.00", retailPrice: "12.00" }),
+          product("IVL 01", "Identificateur Valise Liège", { resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("IVS 01", "Identificateur Valise Similicuir", { resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("ML 01", "Petit Miroir Liège", { resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("CMB 01", "Couteau Multi Bois", { resellerPrice: "7.50", retailPrice: "15.00" }),
+          product("CML 01", "Couteau Multi Liège", { resellerPrice: "7.50", retailPrice: "15.00" }),
+          product("PBA 01", "Pince à billet Argent", { resellerPrice: "4.50", retailPrice: "9.00" }),
         ],
       },
       {
         name: "Art de la table",
         products: [
+          product("BB 01", "Bouchon Bois", { resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("DPL 01", "Dessous de plat Liège", { resellerPrice: "7.50", retailPrice: "15.00" }),
           product("DVL 01", "Dessous de Verre Liège (par 1)", { resellerPrice: "3.00", retailPrice: "6.00", moq: 12, step: 24 }),
+          product("PL 01", "Plateau en Liège", { resellerPrice: "12.00", retailPrice: "24.00" }),
         ],
       },
       {
         name: "Papeterie",
-        products: [],
+        products: [
+          product("CPB 01", "Crayon papier bois", {
+            moq: 10,
+            resellerPrice: "1.00",
+            retailPrice: "2.00",
+          }),
+          product("SBB 01", "Stylo à bille en bois", { resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("BNLP", "Bloc Note Liège A6 Petit", {
+            note1: stockDesignNote,
+            resellerPrice: "4.50",
+            retailPrice: "9.00",
+          }),
+          product("BNSP", "Bloc Note Similicuir A6 Petit", {
+            note1: stockDesignNote,
+            resellerPrice: "4.50",
+            retailPrice: "9.00",
+          }),
+          product("BNLG", "Bloc Note Liège A5 Grand", {
+            note1: stockDesignNote,
+            resellerPrice: "7.50",
+            retailPrice: "15.00",
+          }),
+          product("BNSG", "Bloc Note Similicuir A5 Grand", {
+            note1: stockDesignNote,
+            resellerPrice: "7.50",
+            retailPrice: "15.00",
+          }),
+          product("CP 01", "Carte Postale A6 (105 x 148)", { resellerPrice: "1.50", retailPrice: "3.00" }),
+          product("AT 01", "Affiche A3 + Tube (297 x 420)", { resellerPrice: "12.00", retailPrice: "24.00" }),
+        ],
       },
       {
         name: "Jeux",
         products: [
+          product("MOR 01", "Morpion", { resellerPrice: "7.50", retailPrice: "15.00" }),
           product("DOM 01", "Dominos", { resellerPrice: "7.50", retailPrice: "15.00", moq: 2, step: 4 }),
           product("MIK 01", "Mikado", { resellerPrice: "7.50", retailPrice: "15.00", moq: 2, step: 4 }),
+          product("YO 01", "Yoyo", { resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("JDC 01", "Jeux de Cartes", { resellerPrice: "6.00", retailPrice: "12.00" }),
+          product("RB 01", "Raquette Bois", { resellerPrice: "9.00", retailPrice: "18.00" }),
         ],
       },
     ],
@@ -237,7 +297,8 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     id: "offres-speciales",
     name: "Offres spéciales",
     strapline: "Une capsule à mettre en avant avec parcimonie",
-    summary: "Une sélection plus resserrée pour créer un sentiment d'exclusivité, de série courte ou de proposition événementielle.",
+    summary:
+      "Une sélection plus resserrée pour créer un sentiment d'exclusivité, de série courte ou de proposition événementielle.",
     accent: "#dcffca",
     surface: "rgba(220, 255, 202, 0.72)",
     businessSignals: [
@@ -248,8 +309,12 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       {
         name: "Sélection spéciale",
         products: [
+          product("PCL 01", "Porte Carte Liège", { resellerPrice: "4.50", retailPrice: "9.00" }),
           product("PML 01", "Porte Monnaie Liège", { resellerPrice: "4.50", retailPrice: "9.00", moq: 2, step: 2 }),
           product("BBB 01", "Boîte à bijoux bois", { resellerPrice: "4.50", retailPrice: "9.00", moq: 2, step: 2 }),
+          product("DB 01", "Décapsuleur Bois", { resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("BCC 01", "Boîte à clic-clac", { resellerPrice: "3.50", retailPrice: "7.00" }),
+          product("CL 01", "Cendrier Liège", { resellerPrice: "4.50", retailPrice: "9.00" }),
         ],
       },
     ],
@@ -258,7 +323,8 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     id: "textiles",
     name: "Textiles",
     strapline: "Entrée propre dans le soft goods",
-    summary: "Pochettes et sacs pour compléter l'offre d'objets avec une base textile simple, lisible et facilement scénarisable.",
+    summary:
+      "Pochettes et sacs pour compléter l'offre d'objets avec une base textile simple, lisible et facilement scénarisable.",
     accent: "#efc58d",
     surface: "rgba(239, 197, 141, 0.7)",
     businessSignals: [
@@ -268,11 +334,25 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
     subfamilies: [
       {
         name: "Pochettes",
-        products: [],
+        products: [
+          product("P-001", "Trousse de toilette", { resellerPrice: "9.00", retailPrice: "18.00" }),
+          product("P-002", "Pochette EarthAware Bio S", { resellerPrice: "6.00", retailPrice: "12.00" }),
+          product("P-003", "Pochette EarthAware Bio L", { resellerPrice: "9.00", retailPrice: "18.00" }),
+          product("P-004", "Pochette Zippée S", { resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("P-005", "Pochette Zippée M", { resellerPrice: "6.00", retailPrice: "12.00" }),
+          product("P-006", "Pochette Vintage", { resellerPrice: "9.00", retailPrice: "18.00" }),
+          product("P-007", "Pochette Coton S", { resellerPrice: "3.50", retailPrice: "7.00" }),
+          product("P-008", "Pochette Coton M", { resellerPrice: "4.50", retailPrice: "9.00" }),
+        ],
       },
       {
         name: "Sacs",
-        products: [],
+        products: [
+          product("S-001", "Sac de plage Naturel", { resellerPrice: "12.00", retailPrice: "24.00" }),
+          product("S-002", "Sac de plage XL", { resellerPrice: "15.00", retailPrice: "30.00" }),
+          product("S-003", "Sac Polochon en Molleton", { resellerPrice: "18.00", retailPrice: "36.00" }),
+          product("S-004", "Tote Bag en Coton BIO", { resellerPrice: "4.50", retailPrice: "9.00" }),
+        ],
       },
     ],
   },
@@ -397,7 +477,7 @@ export const featuredReferences: FeaturedReference[] = [
     family: "Textiles",
     label: "Tote Bag en Coton BIO",
     detail:
-      "Une base textile claire, durable et naturellement cohérente avec une identité premium contemporaine.",
+      "Une base textile claire, durable et naturellement cohérente with une identité premium contemporaine.",
     note: "Textile · usage universel",
     accent: "#efc58d",
     surface: "rgba(239, 197, 141, 0.56)",
