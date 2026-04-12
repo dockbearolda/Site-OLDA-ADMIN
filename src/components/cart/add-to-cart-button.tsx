@@ -82,7 +82,7 @@ export function AddToCartButton({
         </div>
         {gain !== null && (
           <div className={styles.gainSummary}>
-            Bénéfice&nbsp;: <span className={styles.gainAmount}>+{Math.round(gain).toLocaleString("fr-FR")}&nbsp;€</span>
+            Marge estimée&nbsp;: <span className={styles.gainAmount}>+{gain.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&nbsp;€</span>
           </div>
         )}
         <div className={styles.quickAdd}>
@@ -97,6 +97,7 @@ export function AddToCartButton({
   }
 
   const pendingGain = productPrixAchat && productPrixRevente ? (productPrixRevente - productPrixAchat) * pendingQty : null;
+  const margeUnitaire = productPrixAchat && productPrixRevente ? (productPrixRevente - productPrixAchat) : null;
 
   /* — Produit pas encore dans le panier — */
   return (
@@ -108,6 +109,11 @@ export function AddToCartButton({
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
           </svg>
           Min.&nbsp;{moq}&nbsp;unités
+        </div>
+      )}
+      {margeUnitaire !== null && (
+        <div className={styles.gainSummary}>
+          Marge unitaire&nbsp;: <span className={styles.gainAmount}>+{margeUnitaire.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&nbsp;€</span>
         </div>
       )}
       <div className={styles.controlRow}>
@@ -130,7 +136,7 @@ export function AddToCartButton({
         </div>
         {pendingGain !== null && (
           <div className={styles.gainSummary}>
-            Bénéfice&nbsp;: <span className={styles.gainAmount}>+{Math.round(pendingGain).toLocaleString("fr-FR")}&nbsp;€</span>
+            Marge estimée&nbsp;: <span className={styles.gainAmount}>+{pendingGain.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&nbsp;€</span>
           </div>
         )}
       </div>
