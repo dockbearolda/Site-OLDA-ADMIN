@@ -522,39 +522,38 @@ export async function POST(request: Request) {
       ? [{ filename: `devis-${ref}.pdf`, content: pdfBuffer }]
       : [];
 
-    const [adminResult, clientResult] = await Promise.all([
-      /* Email admin */
-      resend.emails.send({
-        from,
-        to: adminTo,
-        replyTo: email,
-        subject: `🛒 ${ref} — ${company} (${totalItems} article${totalItems > 1 ? "s" : ""})`,
-        text: adminText,
-        html: adminHtml,
-        attachments: pdfAttachment,
-      }),
-      /* Email client */
-      resend.emails.send({
-        from,
-        to: email,
-        subject: `Votre commande OLDA — ${ref}`,
-        text: clientText,
-        html: clientHtml,
-        attachments: pdfAttachment,
-      }),
-    ]);
+    /* Email admin — critique : on doit absolument notifier l'équipe */
+    const adminResult = await resend.emails.send({
+      from,
+      to: adminTo,
+      replyTo: email,
+      subject: `🛒 ${ref} — ${company} (${totalItems} article${totalItems > 1 ? "s" : ""})`,
+      text: adminText,
+      html: adminHtml,
+      attachments: pdfAttachment,
+    });
 
-    /* Le SDK Resend renvoie {data, error} sans throw — on doit vérifier manuellement */
     if (adminResult.error) {
       console.error("[commande] ❌ Resend erreur (admin):", JSON.stringify(adminResult.error));
-      throw new Error(`Resend admin: ${adminResult.error.message ?? JSON.stringify(adminResult.error)}`);
+      throw new Error(`Échec envoi email admin: ${adminResult.error.message ?? JSON.stringify(adminResult.error)}`);
     }
-    if (clientResult.error) {
-      console.error("[commande] ❌ Resend erreur (client):", JSON.stringify(clientResult.error));
-      throw new Error(`Resend client: ${clientResult.error.message ?? JSON.stringify(clientResult.error)}`);
-    }
+    console.log(`[commande] ✅ Email admin envoyé — id: ${adminResult.data?.id}`);
 
-    console.log(`[commande] ✅ Emails envoyés — admin: ${adminResult.data?.id} | client: ${clientResult.data?.id}`);
+    /* Email client — non critique : si ça échoue on log mais on ne bloque pas */
+    const clientResult = await resend.emails.send({
+      from,
+      to: email,
+      subject: `Votre commande OLDA — ${ref}`,
+      text: clientText,
+      html: clientHtml,
+      attachments: pdfAttachment,
+    });
+
+    if (clientResult.error) {
+      console.warn("[commande] ⚠️ Email client non envoyé (non bloquant):", JSON.stringify(clientResult.error));
+    } else {
+      console.log(`[commande] ✅ Email client envoyé — id: ${clientResult.data?.id}`);
+    }
     return NextResponse.json({ ok: true, ref });
   } catch (error) {
     console.error("[commande] ❌ Erreur envoi email:", error);
