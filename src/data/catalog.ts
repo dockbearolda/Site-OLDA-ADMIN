@@ -140,16 +140,18 @@ const familyBlueprint: readonly CatalogFamilyBlueprint[] = [
       {
         name: "Magnets",
         products: [
-          product("MP 01", "Magnet Plexiglass", { resellerPrice: "2.50", retailPrice: "5.00" }),
-          product("VP 01", "Magnet Plexiglass", { resellerPrice: "2.50", retailPrice: "5.00" }), // Ajouté comme variante possible
-          product("MB 01", "Magnet Bois", { resellerPrice: "4.50", retailPrice: "9.00" }),
-          product("MA 01", "Magnet Acrylique", { resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("MP 01", "Magnet Plexiglass", { moq: 10, step: 10, resellerPrice: "2.50", retailPrice: "5.00" }),
+          product("VP 01", "Magnet Plexiglass Verre", { moq: 10, step: 10, resellerPrice: "2.50", retailPrice: "5.00" }),
+          product("MB 01", "Magnet Bois", { moq: 10, step: 10, resellerPrice: "4.50", retailPrice: "9.00" }),
+          product("MA 01", "Magnet Acrylique", { moq: 10, step: 10, resellerPrice: "4.50", retailPrice: "9.00" }),
         ],
       },
       {
         name: "Sticker",
         products: [
           product("STI 01", "Sticker", {
+            moq: 10,
+            step: 10,
             note2: "75 x 75",
             resellerPrice: "1.00",
             retailPrice: "2.00",

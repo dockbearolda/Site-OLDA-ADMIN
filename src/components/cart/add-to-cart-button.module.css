@@ -5,6 +5,22 @@
   gap: 8px;
 }
 
+/* ── Badge MOQ minimum ── */
+.moqBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  align-self: flex-start;
+  padding: 3px 8px;
+  border-radius: 20px;
+  background: rgba(15, 17, 19, 0.06);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--color-muted);
+  letter-spacing: 0.01em;
+  user-select: none;
+}
+
 .gainSummary {
   display: flex;
   align-items: center;

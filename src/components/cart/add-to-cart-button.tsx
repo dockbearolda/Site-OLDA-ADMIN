@@ -82,7 +82,7 @@ export function AddToCartButton({
         </div>
         {gain !== null && (
           <div className={styles.gainSummary}>
-            Bénéfice total : <span className={styles.gainAmount}>+{Math.round(gain).toLocaleString("fr-FR")}&nbsp;€</span>
+            Bénéfice&nbsp;: <span className={styles.gainAmount}>+{Math.round(gain).toLocaleString("fr-FR")}&nbsp;€</span>
           </div>
         )}
         <div className={styles.quickAdd}>
@@ -101,6 +101,15 @@ export function AddToCartButton({
   /* — Produit pas encore dans le panier — */
   return (
     <div className={styles.addBlock}>
+      {moq > 1 && (
+        <div className={styles.moqBadge}>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          Min.&nbsp;{moq}&nbsp;unités
+        </div>
+      )}
       <div className={styles.controlRow}>
         <div className={styles.pendingRow}>
           <button
@@ -121,7 +130,7 @@ export function AddToCartButton({
         </div>
         {pendingGain !== null && (
           <div className={styles.gainSummary}>
-            Bénéfice total : <span className={styles.gainAmount}>+{Math.round(pendingGain).toLocaleString("fr-FR")}&nbsp;€</span>
+            Bénéfice&nbsp;: <span className={styles.gainAmount}>+{Math.round(pendingGain).toLocaleString("fr-FR")}&nbsp;€</span>
           </div>
         )}
       </div>
@@ -146,7 +155,7 @@ export function AddToCartButton({
             Ajouté ✓
           </>
         )}
-        {phase === "idle" && "Ajouter"}
+        {phase === "idle" && "Ajouter au panier"}
       </button>
     </div>
   );

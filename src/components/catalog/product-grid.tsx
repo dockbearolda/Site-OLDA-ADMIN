@@ -125,8 +125,8 @@ function PricingBlock({ achat, revente }: { achat?: number; revente?: number }) 
             </span>
           )}
           {coef !== null && (
-            <span className={styles.priceCoef} title="Coefficient revendeur">
-              {coef.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            <span className={styles.priceCoef} title="Coefficient revendeur (prix boutique ÷ prix achat)">
+              ×{coef.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           )}
         </div>
@@ -251,8 +251,8 @@ const ProductListRow = memo(function ProductListRow({ item, onQuickView }: CardP
             <span className={styles.listPriceGain}>Gain +{Math.round(revente - achat).toLocaleString("fr-FR")} €</span>
           )}
           {coef !== null && (
-            <span className={styles.listPriceCoef} title="Coefficient revendeur">
-              {coef.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            <span className={styles.listPriceCoef} title="Coefficient revendeur (prix boutique ÷ prix achat)">
+              ×{coef.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
             </span>
           )}
         </div>

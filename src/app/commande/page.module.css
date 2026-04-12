@@ -422,6 +422,11 @@
   background: #1a7a4a !important;
 }
 
+.submitBtnSending {
+  cursor: wait;
+  opacity: 0.85;
+}
+
 /* ── Spinner ── */
 .spinner {
   display: block;

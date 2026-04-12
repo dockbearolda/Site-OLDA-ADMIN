@@ -527,7 +527,7 @@ export async function POST(request: Request) {
       resend.emails.send({
         from,
         to: adminTo,
-        reply_to: email,
+        replyTo: email,
         subject: `🛒 ${ref} — ${company} (${totalItems} article${totalItems > 1 ? "s" : ""})`,
         text: adminText,
         html: adminHtml,

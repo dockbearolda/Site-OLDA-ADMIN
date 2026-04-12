@@ -127,7 +127,7 @@ export default function CommandePage() {
     }
 
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 35_000);
+    const timeoutId = setTimeout(() => controller.abort(), 20_000);
 
     try {
       const res = await fetch("/api/commande", {
@@ -136,7 +136,6 @@ export default function CommandePage() {
         body: JSON.stringify({ ...form, items, pdfBase64 }),
         signal: controller.signal,
       });
-      clearTimeout(timeoutId);
 
       if (!res.ok) {
         const errData = await res.json().catch(() => ({})) as { error?: string };
@@ -152,15 +151,16 @@ export default function CommandePage() {
       clear();
       setSubmitState("success");
     } catch (err) {
-      clearTimeout(timeoutId);
       if (err instanceof Error && err.name === "AbortError") {
-        setError("Le serveur ne répond pas. Vérifiez votre connexion et réessayez.");
+        setError("Le serveur ne répond pas (délai dépassé). Vérifiez votre connexion et réessayez.");
       } else if (err instanceof Error) {
         setError(err.message);
       } else {
         setError("Une erreur est survenue. Veuillez réessayer.");
       }
       setSubmitState("idle");
+    } finally {
+      clearTimeout(timeoutId);
     }
   }
 
@@ -409,11 +409,14 @@ export default function CommandePage() {
 
               <button
                 type="submit"
-                className={styles.submitBtn}
+                className={[styles.submitBtn, submitState === "sending" ? styles.submitBtnSending : ""].filter(Boolean).join(" ")}
                 disabled={submitState !== "idle"}
               >
                 {submitState === "sending" && (
-                  <span className={styles.spinner} aria-label="Envoi en cours…" />
+                  <>
+                    <span className={styles.spinner} aria-hidden="true" />
+                    Envoi en cours…
+                  </>
                 )}
                 {submitState === "idle" && "Valider ma commande"}
               </button>
