@@ -94,7 +94,8 @@ function buildAdminHtml(
   const totalB2B = items.reduce((s, i) => s + (i.prixAchat ?? 0) * i.quantity, 0);
   const totalRevente = items.reduce((s, i) => s + (i.prixRevente ?? 0) * i.quantity, 0);
   const margeNette = totalRevente - totalB2B;
-  const tauxMarge = totalRevente > 0 ? ((margeNette / totalRevente) * 100).toFixed(1) : "0.0";
+  const coeffMarge = totalB2B > 0 ? (margeNette / totalB2B).toFixed(2) : "0.00";
+  const coeffSign = margeNette >= 0 ? "+" : "";
 
   const rows = items
     .map(
@@ -126,9 +127,9 @@ function buildAdminHtml(
       <div style="margin-top:12px; background:#064e3b; border-radius:12px; padding:16px 20px; display:flex; justify-content:space-between; align-items:center;">
         <div>
           <div style="font-size:11px; font-weight:700; text-transform:uppercase; letter-spacing:0.07em; color:rgba(110,231,183,0.7); margin-bottom:4px;">Bénéfice net projeté</div>
-          <div style="font-size:20px; font-weight:800; color:#6ee7b7; letter-spacing:-0.02em;">+${fmtEur(margeNette)}</div>
+          <div style="font-size:20px; font-weight:800; color:#6ee7b7; letter-spacing:-0.02em;">${coeffSign}${fmtEur(margeNette)}</div>
         </div>
-        <div style="font-size:18px; font-weight:800; color:#6ee7b7;">+${tauxMarge}%</div>
+        <div style="font-size:18px; font-weight:800; color:#6ee7b7;">coeff ${coeffSign}${coeffMarge}</div>
       </div>
     </td>
   </tr>` : "";

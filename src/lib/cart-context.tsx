@@ -24,7 +24,8 @@ type CartContextValue = {
   totalB2B: number;
   totalRevente: number;
   margeNette: number;
-  tauxMarge: number;
+  /** Coefficient de marge = Marge Brute / Coût Achat HT  (ex: 1.50 = 150 % de marge) */
+  coeffMarge: number;
   hasPrices: boolean;
   add: (ref: string, label: string, quantity?: number, prixAchat?: number, prixRevente?: number) => void;
   remove: (ref: string) => void;
@@ -132,9 +133,9 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     [totalRevente, totalB2B],
   );
 
-  const tauxMarge = useMemo(
-    () => (totalRevente > 0 ? (margeNette / totalRevente) * 100 : 0),
-    [margeNette, totalRevente],
+  const coeffMarge = useMemo(
+    () => (totalB2B > 0 ? margeNette / totalB2B : 0),
+    [margeNette, totalB2B],
   );
 
   const hasPrices = useMemo(
@@ -149,7 +150,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       totalB2B,
       totalRevente,
       margeNette,
-      tauxMarge,
+      coeffMarge,
       hasPrices,
       add,
       remove,
@@ -157,7 +158,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
       clear,
       replace,
     }),
-    [items, totalItems, totalB2B, totalRevente, margeNette, tauxMarge, hasPrices, add, remove, updateQuantity, clear, replace],
+    [items, totalItems, totalB2B, totalRevente, margeNette, coeffMarge, hasPrices, add, remove, updateQuantity, clear, replace],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

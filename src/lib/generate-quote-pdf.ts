@@ -243,12 +243,13 @@ export function generateQuotePDF(items: CartItem[], form?: FormData, totals?: To
       doc.setTextColor(110, 231, 183);
       doc.text("BÉNÉFICE NET PROJETÉ", margin + 6, y);
 
-      const tauxMarge = totals.totalRevente > 0
-        ? ((totals.margeNette / totals.totalRevente) * 100).toFixed(1)
-        : "0.0";
+      const coeffMarge = totals.totalB2B > 0
+        ? (totals.margeNette / totals.totalB2B).toFixed(2)
+        : "0.00";
+      const margeSign = totals.margeNette >= 0 ? "+" : "";
       doc.setFontSize(11);
       doc.setTextColor(110, 231, 183);
-      doc.text(`+${fmtEur(totals.margeNette)}  (${tauxMarge}%)`, pageW - margin - 4, y, { align: "right" });
+      doc.text(`${margeSign}${fmtEur(totals.margeNette)}  (coeff ${margeSign}${coeffMarge})`, pageW - margin - 4, y, { align: "right" });
 
       y += margeBoxH / 2 + 2;
     } else {

@@ -12,13 +12,14 @@ function fmt(n: number): string {
 }
 
 export function MarginDashboard({ vertical = false }: { vertical?: boolean }) {
-  const { hasPrices, totalB2B, totalRevente, margeNette, tauxMarge } = useCart();
+  const { hasPrices, totalB2B, totalRevente, margeNette, coeffMarge } = useCart();
   const [isOpen, setIsOpen] = useState(true);
 
   if (!hasPrices) return null;
 
   const isPositive = margeNette >= 0;
   const heroSign = isPositive ? "+" : "";
+  const coeffSign = coeffMarge >= 0 ? "+" : "";
 
   return (
     <div className={styles.dashboard}>
@@ -38,7 +39,7 @@ export function MarginDashboard({ vertical = false }: { vertical?: boolean }) {
               {heroSign}{fmt(margeNette)}
             </span>
             <span className={styles.summaryBadge}>
-              {heroSign}{tauxMarge.toFixed(1)}%
+              coeff {coeffSign}{coeffMarge.toFixed(2)}
             </span>
           </span>
         )}
@@ -98,7 +99,7 @@ export function MarginDashboard({ vertical = false }: { vertical?: boolean }) {
             </span>
             <span className={styles.heroName}>Bénéfice net projeté</span>
             <span className={styles.heroBadge}>
-              {heroSign}{tauxMarge.toFixed(1)}% de marge
+              coeff {coeffSign}{coeffMarge.toFixed(2)}
             </span>
           </div>
         </div>
