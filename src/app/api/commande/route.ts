@@ -522,7 +522,7 @@ export async function POST(request: Request) {
       ? [{ filename: `devis-${ref}.pdf`, content: pdfBuffer }]
       : [];
 
-    await Promise.all([
+    const [adminResult, clientResult] = await Promise.all([
       /* Email admin */
       resend.emails.send({
         from,
@@ -544,7 +544,17 @@ export async function POST(request: Request) {
       }),
     ]);
 
-    console.log(`[commande] ✅ Emails envoyés avec succès — ref: ${ref}`);
+    /* Le SDK Resend renvoie {data, error} sans throw — on doit vérifier manuellement */
+    if (adminResult.error) {
+      console.error("[commande] ❌ Resend erreur (admin):", JSON.stringify(adminResult.error));
+      throw new Error(`Resend admin: ${adminResult.error.message ?? JSON.stringify(adminResult.error)}`);
+    }
+    if (clientResult.error) {
+      console.error("[commande] ❌ Resend erreur (client):", JSON.stringify(clientResult.error));
+      throw new Error(`Resend client: ${clientResult.error.message ?? JSON.stringify(clientResult.error)}`);
+    }
+
+    console.log(`[commande] ✅ Emails envoyés — admin: ${adminResult.data?.id} | client: ${clientResult.data?.id}`);
     return NextResponse.json({ ok: true, ref });
   } catch (error) {
     console.error("[commande] ❌ Erreur envoi email:", error);
