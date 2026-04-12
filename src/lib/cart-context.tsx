@@ -118,18 +118,20 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     [items],
   );
 
+  const r2 = (n: number) => Math.round(n * 100) / 100;
+
   const totalB2B = useMemo(
-    () => items.reduce((sum, i) => sum + (i.prixAchat ?? 0) * i.quantity, 0),
+    () => r2(items.reduce((sum, i) => sum + (i.prixAchat ?? 0) * i.quantity, 0)),
     [items],
   );
 
   const totalRevente = useMemo(
-    () => items.reduce((sum, i) => sum + (i.prixRevente ?? 0) * i.quantity, 0),
+    () => r2(items.reduce((sum, i) => sum + (i.prixRevente ?? 0) * i.quantity, 0)),
     [items],
   );
 
   const margeNette = useMemo(
-    () => totalRevente - totalB2B,
+    () => r2(totalRevente - totalB2B),
     [totalRevente, totalB2B],
   );
 

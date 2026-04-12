@@ -90,10 +90,11 @@ function buildAdminHtml(
   ref: string,
   date: Date,
 ): string {
+  const r2 = (n: number) => Math.round(n * 100) / 100;
   const hasPrices = items.some((i) => i.prixAchat != null && i.prixAchat > 0);
-  const totalB2B = items.reduce((s, i) => s + (i.prixAchat ?? 0) * i.quantity, 0);
-  const totalRevente = items.reduce((s, i) => s + (i.prixRevente ?? 0) * i.quantity, 0);
-  const margeNette = totalRevente - totalB2B;
+  const totalB2B     = r2(items.reduce((s, i) => s + (i.prixAchat ?? 0) * i.quantity, 0));
+  const totalRevente = r2(items.reduce((s, i) => s + (i.prixRevente ?? 0) * i.quantity, 0));
+  const margeNette   = r2(totalRevente - totalB2B);
   const coeffMarge = totalB2B > 0 ? (margeNette / totalB2B).toFixed(2) : "0.00";
   const coeffSign = margeNette >= 0 ? "+" : "";
 
@@ -456,10 +457,13 @@ export async function POST(request: Request) {
     items.push({ ref, label, quantity, prixAchat, prixRevente });
   }
 
+  /** Arrondi bancaire — évite les erreurs IEEE 754 avant persistance */
+  const round2 = (n: number) => Math.round(n * 100) / 100;
+
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
-  const totalB2B = items.reduce((s, i) => s + (i.prixAchat ?? 0) * i.quantity, 0);
-  const totalRevente = items.reduce((s, i) => s + (i.prixRevente ?? 0) * i.quantity, 0);
-  const margeNette = totalRevente - totalB2B;
+  const totalB2B    = round2(items.reduce((s, i) => s + (i.prixAchat ?? 0) * i.quantity, 0));
+  const totalRevente = round2(items.reduce((s, i) => s + (i.prixRevente ?? 0) * i.quantity, 0));
+  const margeNette  = round2(totalRevente - totalB2B);
 
   const now = new Date();
   const ref = orderRef(now);
