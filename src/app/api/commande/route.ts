@@ -95,7 +95,7 @@ function buildAdminHtml(
   const totalB2B     = r2(items.reduce((s, i) => s + (i.prixAchat ?? 0) * i.quantity, 0));
   const totalRevente = r2(items.reduce((s, i) => s + (i.prixRevente ?? 0) * i.quantity, 0));
   const margeNette   = r2(totalRevente - totalB2B);
-  const coeffMarge = totalB2B > 0 ? (margeNette / totalB2B).toFixed(2) : "0.00";
+  const coeffMarge = totalB2B > 0 ? (margeNette / totalB2B).toFixed(3) : "0.000";
   const coeffSign = margeNette >= 0 ? "+" : "";
 
   const rows = items

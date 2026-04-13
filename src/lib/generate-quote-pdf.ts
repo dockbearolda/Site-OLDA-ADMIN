@@ -244,8 +244,8 @@ export function generateQuotePDF(items: CartItem[], form?: FormData, totals?: To
       doc.text("BÉNÉFICE NET PROJETÉ", margin + 6, y);
 
       const coeffMarge = totals.totalB2B > 0
-        ? (totals.margeNette / totals.totalB2B).toFixed(2)
-        : "0.00";
+        ? (totals.margeNette / totals.totalB2B).toFixed(3)
+        : "0.000";
       const margeSign = totals.margeNette >= 0 ? "+" : "";
       doc.setFontSize(11);
       doc.setTextColor(110, 231, 183);

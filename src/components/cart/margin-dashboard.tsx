@@ -39,7 +39,7 @@ export function MarginDashboard({ vertical = false }: { vertical?: boolean }) {
               {heroSign}{fmt(margeNette)}
             </span>
             <span className={styles.summaryBadge}>
-              coeff {coeffSign}{coeffMarge.toFixed(2)}
+              coeff {coeffSign}{coeffMarge.toFixed(3)}
             </span>
           </span>
         )}
@@ -99,7 +99,7 @@ export function MarginDashboard({ vertical = false }: { vertical?: boolean }) {
             </span>
             <span className={styles.heroName}>Bénéfice net projeté</span>
             <span className={styles.heroBadge}>
-              coeff {coeffSign}{coeffMarge.toFixed(2)}
+              coeff {coeffSign}{coeffMarge.toFixed(3)}
             </span>
           </div>
         </div>
