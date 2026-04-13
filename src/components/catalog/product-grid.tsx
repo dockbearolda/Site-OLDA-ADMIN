@@ -100,7 +100,7 @@ function formatPrice(val: number): string {
 function computeCoef(achat: number | undefined, revente: number | undefined): number | null {
   if (!achat || !revente || achat <= 0) return null;
   const c = revente / achat;
-  return isFinite(c) && !isNaN(c) ? Math.round(c * 100) / 100 : null;
+  return isFinite(c) && !isNaN(c) ? Math.round(c * 1000) / 1000 : null;
 }
 
 // ── Pricing block component ──────────────────────────────────────

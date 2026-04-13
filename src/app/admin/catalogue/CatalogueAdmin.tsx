@@ -460,7 +460,7 @@ function ProductTable({
                     fontSize: 12,
                     fontVariantNumeric: "tabular-nums",
                   }}>
-                    ×{(p.prixPublic / p.prixRevendeur).toFixed(2)}
+                    ×{(p.prixPublic / p.prixRevendeur).toFixed(3)}
                   </span>
                 ) : "—"}
               </td>
