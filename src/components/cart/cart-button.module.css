@@ -44,8 +44,8 @@
   font-weight: 800;
 }
 
-/* Dans le catalogue sur desktop (≥1280px), CartSidebar est visible — masquer le bouton */
-@media (min-width: 1280px) {
+/* Dans le catalogue sur ≥980px, CartSidebar est visible dans le layout — masquer le bouton */
+@media (min-width: 980px) {
   .buttonDrawer {
     display: none;
   }

@@ -84,8 +84,8 @@
   overflow: hidden;
 }
 
-/* Sur desktop, le drawer ne s'affiche jamais (géré par CartButton CSS) */
-@media (min-width: 1280px) {
+/* Sur ≥980px, le CartSidebar est dans le layout — le drawer ne s'affiche jamais */
+@media (min-width: 980px) {
   .backdrop,
   .panel {
     display: none !important;
