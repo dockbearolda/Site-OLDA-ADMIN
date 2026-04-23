@@ -466,7 +466,7 @@
 }
 
 .image {
-  object-fit: cover;
+  object-fit: contain;
   transition: transform 700ms ease-in-out;
 }
 

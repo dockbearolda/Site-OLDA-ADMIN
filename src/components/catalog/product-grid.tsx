@@ -96,38 +96,24 @@ function formatPrice(val: number): string {
   return val.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "\u00a0€";
 }
 
-/** Calcule le coefficient revente/achat. Retourne null si indéfini ou invalide (#DIV/0). */
-function computeCoef(achat: number | undefined, revente: number | undefined): number | null {
-  if (!achat || !revente || achat <= 0) return null;
-  const c = revente / achat;
-  return isFinite(c) && !isNaN(c) ? Math.round(c * 1000) / 1000 : null;
-}
 
 // ── Pricing block component ──────────────────────────────────────
 function PricingBlock({ achat, revente }: { achat?: number; revente?: number }) {
   if (!achat && !revente) return null;
-  const coef = computeCoef(achat, revente);
   return (
     <div className={styles.pricingBlock}>
       <span className={styles.priceLabelSmall}>Votre prix d&rsquo;achat</span>
       <span className={styles.priceMain}>
         {achat ? formatPrice(achat) : revente ? formatPrice(revente) : "—"}
       </span>
-      {(revente && achat || coef) && (
+      {revente && achat && (
         <div className={styles.priceSecondary}>
-          {revente && achat && (
-            <span className={styles.pricePvc}>
-              <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "inline", verticalAlign: "middle", marginRight: 2 }}>
-                <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
-              </svg>
-              {formatPrice(revente)} boutique
-            </span>
-          )}
-          {coef !== null && (
-            <span className={styles.priceCoef} title="Coefficient revendeur (prix boutique ÷ prix achat)">
-              ×{coef.toLocaleString("fr-FR", { minimumFractionDigits: 3, maximumFractionDigits: 3 })}
-            </span>
-          )}
+          <span className={styles.pricePvc}>
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ display: "inline", verticalAlign: "middle", marginRight: 2 }}>
+              <line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" />
+            </svg>
+            {formatPrice(revente)} boutique
+          </span>
         </div>
       )}
     </div>
@@ -208,7 +194,6 @@ const ProductListRow = memo(function ProductListRow({ item, onQuickView }: CardP
   const src = getProductImagePath(item.ref);
   const achat = parsePrice(item.resellerPrice);
   const revente = parsePrice(item.retailPrice);
-  const coef = computeCoef(achat, revente);
 
   return (
     <div className={styles.listRow}>
@@ -241,11 +226,6 @@ const ProductListRow = memo(function ProductListRow({ item, onQuickView }: CardP
               <span className={styles.listPricePvc}>→&nbsp;{formatPrice(revente)} boutique</span>
             )}
           </div>
-          {coef !== null && (
-            <span className={styles.listPriceCoef} title="Coefficient revendeur (prix boutique ÷ prix achat)">
-              ×{coef.toLocaleString("fr-FR", { minimumFractionDigits: 3, maximumFractionDigits: 3 })}
-            </span>
-          )}
         </div>
       )}
 

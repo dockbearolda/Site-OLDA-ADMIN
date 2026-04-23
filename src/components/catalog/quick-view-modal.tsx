@@ -20,11 +20,6 @@ function formatPrice(val: number): string {
   return val.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + "\u00a0€";
 }
 
-function computeCoef(achat: number | undefined, revente: number | undefined): number | null {
-  if (!achat || !revente || achat <= 0) return null;
-  const c = revente / achat;
-  return isFinite(c) && !isNaN(c) ? Math.round(c * 100) / 100 : null;
-}
 
 type Props = {
   product: CatalogProduct;
@@ -35,7 +30,6 @@ export function QuickViewModal({ product, onClose }: Props) {
   const src = getProductImagePath(product.ref);
   const prixAchat = parsePrice(product.resellerPrice);
   const prixRevente = parsePrice(product.retailPrice);
-  const coef = computeCoef(prixAchat, prixRevente);
   const meta = [
     product.note1,
     product.note2,
@@ -108,11 +102,6 @@ export function QuickViewModal({ product, onClose }: Props) {
                     {prixAchat ? formatPrice(prixAchat) : "—"}
                   </span>
                 </div>
-                {coef !== null && (
-                  <span className={styles.pricingCoef} title="Coefficient revendeur">
-                    {coef.toLocaleString("fr-FR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                  </span>
-                )}
               </div>
               {prixRevente && prixAchat && (
                 <div className={styles.pricingRetail}>
